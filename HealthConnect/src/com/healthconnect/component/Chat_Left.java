@@ -5,6 +5,7 @@
 package com.healthconnect.component;
 
 import java.awt.Color;
+import javax.swing.Icon;
 
 /**
  *
@@ -21,7 +22,22 @@ public class Chat_Left extends javax.swing.JLayeredPane {
     }
     
     public void setText(String text){
-        txt.setText(text);
+        if(text.equals("")){  // if the text is empty ,make sure it does not takes a new line
+            txt.hideText();
+        }else{
+            txt.setText(text);
+        }    
+    }
+        
+    public void setImage(String... imageEncodingStrings){
+        txt.setImage(false, imageEncodingStrings);
+    }
+    
+    public void setImage(Icon... images){
+        txt.setImage(false, images);
+    }
+    
+    public void setTime(String time){
         txt.setTime("10:30 AM");
     }
 

@@ -4,9 +4,12 @@
  */
 package com.healthconnect.main;
 
+import com.healthconnect.event.EventImageView;
+import com.healthconnect.event.PublicEvent;
 import com.healthconnect.swing.ComponentResizer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -31,6 +34,26 @@ public class Main extends javax.swing.JFrame {
         com.setMinimumSize(new Dimension(800, 500));
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10,10));
+        
+        imageView.setVisible(false); // we have two panel, to set imageview as invisible at first
+        home.setVisible(true);
+        initEvent();
+    }
+    
+    
+    public void initEvent(){  // initialize/define the image event, and we can triger this event with the medthods in Chat_Image class
+        PublicEvent.getInstance().addEventImageView(new EventImageView() {
+            @Override
+            public void viewImage(Icon image) {
+              imageView.viewImage(image);
+            }
+            
+            @Override
+            public void saveImage(Icon image){
+                System.out.println("hutao");
+            }
+        });
+        
     }
 
     /**
@@ -48,7 +71,8 @@ public class Main extends javax.swing.JFrame {
         cmdMinimize = new javax.swing.JButton();
         cmdMinimize1 = new javax.swing.JButton();
         body = new javax.swing.JLayeredPane();
-        home1 = new com.healthconnect.form.Home();
+        imageView = new com.healthconnect.form.View_Image();
+        home = new com.healthconnect.form.Home();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -109,8 +133,10 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(cmdMinimize1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        body.setLayout(new java.awt.BorderLayout());
-        body.add(home1, java.awt.BorderLayout.CENTER);
+        body.setLayout(new java.awt.CardLayout());
+        body.setLayer(imageView, javax.swing.JLayeredPane.POPUP_LAYER);
+        body.add(imageView, "card3");
+        body.add(home, "card2");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -125,7 +151,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body))
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout borderLayout = new javax.swing.GroupLayout(border);
@@ -224,7 +250,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel border;
     private javax.swing.JButton cmdMinimize;
     private javax.swing.JButton cmdMinimize1;
-    private com.healthconnect.form.Home home1;
+    private com.healthconnect.form.Home home;
+    private com.healthconnect.form.View_Image imageView;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }
