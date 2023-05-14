@@ -5,11 +5,13 @@
 package com.healthconnect.component;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.EmptyBorder;
@@ -43,6 +45,28 @@ public class Chat_Item extends javax.swing.JLayeredPane {
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
         super.paintComponent(g); 
+    }
+    
+    public void setUserProfile(String user){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));
+        layer.setBorder(new EmptyBorder(10,10,0,10));
+        
+        // set user profile name 
+        JButton cmd = new JButton(user);
+        cmd.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cmd.setBorder(null);
+        cmd.setContentAreaFilled(false);
+        cmd.setFocusable(false);
+        cmd.setForeground(new Color(30,121,213));
+        cmd.setFont(new java.awt.Font("sansserif", 1,13));
+        
+//        txt.setBorder(new EmptyBorder(5,10,10,10));
+        txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        
+        layer.add(cmd);
+        add(layer, 0);
+        
     }
     
     public void setTime(String time){
