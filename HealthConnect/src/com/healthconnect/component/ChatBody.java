@@ -6,6 +6,7 @@ package com.healthconnect.component;
 
 import com.healthconnect.swing.ScrollBar;
 import java.awt.Color;
+import javax.swing.Icon;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -20,24 +21,12 @@ public class ChatBody extends javax.swing.JPanel {
     public ChatBody() {
         initComponents();
         init();
+        addItemLeft("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出","Johnathan");
+        addItemLeft("hello", "Johnathan");
+        addDate("06/12/1998");
         addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
-        addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
-        addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asd\n  asda\n asdsa");
-        addItemRight("asdasdadasdsadasd  asdasd asd");
-        addItemLeft("asdsakdasklnasklaskasdlas");
+        addDate("TODAY");
+        addItemLeft(" 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情","Shiyun");
         
         
     }
@@ -48,10 +37,11 @@ public class ChatBody extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
     
-    public void addItemLeft(String text){
-        Chat_Left item = new Chat_Left();
+    public void addItemLeft(String text, String user){
+        Chat_Left_Profile item = new Chat_Left_Profile();
         item.setText(text);
-        body.add(item, "wrap, w :: 80%");  // set woyj as 80% max width
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }
@@ -59,11 +49,18 @@ public class ChatBody extends javax.swing.JPanel {
     public void addItemRight(String text){
         Chat_Right item = new Chat_Right();
         item.setText(text);
-        body.add(item, "wrap, al right, w :: 80%");  // set woyj as 80% max width
+        body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }
     
+    public void addDate(String date){
+        Chat_Date item = new Chat_Date();
+        item.setDate(date);
+        body.add(item, "wrap, al center");
+        body.repaint();
+        body.revalidate();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
