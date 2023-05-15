@@ -35,7 +35,8 @@ public class ChatBody extends javax.swing.JPanel {
         addItemLeft("", "Shiyun", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/tick.png")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/zzs.jpg")));
         addItemRight("asd在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")));
         addItemLeft("asd", "Shiyun", imgs);
-        
+        addItemFile("dada", "Yaohong", "mydoc.pdf", "1MB");
+        addItemFileRight("", "mydoc.pdf", "1MB");
     }
     
     private void init(){
@@ -63,6 +64,27 @@ public class ChatBody extends javax.swing.JPanel {
         item.setTime("asd");
         item.setUserProfile(user);
         body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        body.repaint();
+        body.revalidate();
+    }
+    
+    public void addItemFile(String text, String user, String filename, String filesize){
+        Chat_Left_Profile item = new Chat_Left_Profile();
+        item.setText(text);
+        item.setFile(filename, filesize);
+        item.setTime("asd");
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        body.repaint();
+        body.revalidate();
+    }
+        
+    public void addItemFileRight(String text, String filename, String filesize){
+        Chat_Right item = new Chat_Right();
+        item.setText(text);
+        item.setFile(filename, filesize);
+
+        body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }

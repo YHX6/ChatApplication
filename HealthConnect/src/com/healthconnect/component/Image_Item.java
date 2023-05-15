@@ -47,6 +47,7 @@ public class Image_Item extends javax.swing.JLayeredPane {
 
         progress1.setForeground(new java.awt.Color(255, 255, 255));
         progress1.setValue(50);
+        progress1.setProgressType(com.healthconnect.swing.Progress.ProgressType.CANCEL);
 
         picBox.setLayer(progress1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -66,6 +67,8 @@ public class Image_Item extends javax.swing.JLayeredPane {
                 .addComponent(progress1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
+
+        setLayer(picBox, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

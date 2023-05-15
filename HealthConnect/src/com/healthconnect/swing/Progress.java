@@ -4,6 +4,8 @@
  */
 package com.healthconnect.swing;
 
+import com.sun.xml.internal.ws.api.Cancelable;
+import javax.swing.Icon;
 import javax.swing.JProgressBar;
 
 /**
@@ -12,6 +14,21 @@ import javax.swing.JProgressBar;
  * This clas is used to show image under progress
  */
 public class Progress extends  JProgressBar{
+    private ProgressType progressType = ProgressType.NONE;
+    
+    public static enum ProgressType{
+        NONE, DOWN_FILE, CANCEL, FILE
+    }
+
+    public ProgressType getProgressType() {
+        return progressType;
+    }
+
+    public void setProgressType(ProgressType progressType) {
+        this.progressType = progressType;
+        repaint();
+    }
+    
     
     public Progress(){
         setOpaque(false);
