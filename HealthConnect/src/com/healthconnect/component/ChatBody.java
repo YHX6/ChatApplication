@@ -7,6 +7,7 @@ package com.healthconnect.component;
 import com.healthconnect.swing.ScrollBar;
 import java.awt.Color;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -21,14 +22,21 @@ public class ChatBody extends javax.swing.JPanel {
     public ChatBody() {
         initComponents();
         init();
+        
+        // testing
+        String[] imgs = {"LGF5]+Yk^6#M@-5c,1J5@[or[Q6.", "L5BpbD1,0g2|I^-=5Y%N18$kR%?G"};
+        
         addItemLeft("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出","Johnathan");
         addItemLeft("hello", "Johnathan");
         addDate("06/12/1998");
         addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
         addDate("TODAY");
         addItemLeft(" 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情","Shiyun");
-        
-        
+        addItemLeft("", "Shiyun", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/tick.png")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/zzs.jpg")));
+        addItemRight("asd在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")));
+        addItemLeft("asd", "Shiyun", imgs);
+        addItemFile("dada", "Yaohong", "mydoc.pdf", "1MB");
+        addItemFileRight("", "mydoc.pdf", "1MB");
     }
     
     private void init(){
@@ -37,22 +45,63 @@ public class ChatBody extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
     
-    public void addItemLeft(String text, String user){
+    public void addItemLeft(String text, String user, Icon... images){
         Chat_Left_Profile item = new Chat_Left_Profile();
         item.setText(text);
+        item.setImage(images);
+        item.setTime("asd");
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        body.repaint();
+        body.revalidate();
+    }
+    
+        
+    public void addItemLeft(String text, String user, String[] imageEncodingsStrings){
+        Chat_Left_Profile item = new Chat_Left_Profile();
+        item.setText(text);
+        item.setImage(imageEncodingsStrings);
+        item.setTime("asd");
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        body.repaint();
+        body.revalidate();
+    }
+    
+    public void addItemFile(String text, String user, String filename, String filesize){
+        Chat_Left_Profile item = new Chat_Left_Profile();
+        item.setText(text);
+        item.setFile(filename, filesize);
+        item.setTime("asd");
         item.setUserProfile(user);
         body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }
         
-    public void addItemRight(String text){
+    public void addItemFileRight(String text, String filename, String filesize){
         Chat_Right item = new Chat_Right();
         item.setText(text);
+        item.setFile(filename, filesize);
+
         body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }
+    
+        
+    public void addItemRight(String text, Icon... images){
+        Chat_Right item = new Chat_Right();
+        item.setText(text);
+        item.setImage(images);
+        item.setTime("asd");
+//        item.setUserProfile(user);
+        body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+        body.repaint();
+        body.revalidate();
+    }
+        
+
     
     public void addDate(String date){
         Chat_Date item = new Chat_Date();

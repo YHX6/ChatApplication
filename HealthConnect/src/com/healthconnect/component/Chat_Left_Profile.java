@@ -32,9 +32,30 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
     }
     
     public void setText(String text){
-        txt.setText(text);
+        if(text.equals("")){  // if the text is empty ,make sure it does not takes a new line
+            txt.hideText();
+        }else{
+            txt.setText(text);
+        } 
+    }
+    
+    public void setImage(Icon... images){
+        txt.setImage(false, images);
+    }
+    
+        
+    public void setImage(String... imageEncodingStrings){
+        txt.setImage(false, imageEncodingStrings);
+    }
+    
+    public void setTime(String time){
         txt.setTime("10:30 AM");
     }
+    public void setFile(String filename, String filesize){
+        txt.setFile(filename, filesize);
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -96,6 +97,41 @@ public class Chat_Item extends javax.swing.JLayeredPane {
         }
     }
     
+    public void setImage(boolean right, Icon... images){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(right?FlowLayout.RIGHT : FlowLayout.LEFT));
+        layer.setBorder(new EmptyBorder(0,5,0,5));
+        Chat_Image chat_Image = new Chat_Image(right);
+        chat_Image.addImage(images);
+        layer.add(chat_Image);
+        add(layer); // add layerpane to Chat_Item
+    }
+    
+    public void setImage(boolean right, String... imageEncodingStrings){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(right?FlowLayout.RIGHT : FlowLayout.LEFT));
+        layer.setBorder(new EmptyBorder(0,5,0,5));
+        Chat_Image chat_Image = new Chat_Image(right);
+        chat_Image.addImage(imageEncodingStrings);
+        layer.add(chat_Image);
+        add(layer); // add layerpane to Chat_Item
+    }
+    
+    public void setFile(String filename, String filesize){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(FlowLayout.LEFT));
+        layer.setBorder(new EmptyBorder(0,5,0,5));
+        Chat_File item = new Chat_File();
+        item.setFile(filename, filesize);
+        layer.add(item);
+        
+        add(layer); // add layerpane to Chat_Item
+    }
+    
+    
+    public void hideText(){
+        txt.setVisible(false);
+    }
     
 
     /**

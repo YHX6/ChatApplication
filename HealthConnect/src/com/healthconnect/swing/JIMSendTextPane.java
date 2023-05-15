@@ -4,6 +4,10 @@
  */
 package com.healthconnect.swing;
 
+/*
+*  This class is used to create a panel to hold texts
+ */
+
 
  import javax.swing.JTextPane;  
     import javax.swing.text.AbstractDocument;  
@@ -21,8 +25,6 @@ package com.healthconnect.swing;
 
     public class JIMSendTextPane extends JTextPane {  
       
-        // 内部类  
-        // 以下内部类全都用于实现自动强制折行  
       
         private class WarpEditorKit extends StyledEditorKit {  
       
