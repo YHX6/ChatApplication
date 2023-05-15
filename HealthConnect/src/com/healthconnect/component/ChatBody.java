@@ -5,9 +5,14 @@
 package com.healthconnect.component;
 
 import com.healthconnect.swing.ScrollBar;
+import java.awt.Adjustable;
 import java.awt.Color;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -24,19 +29,19 @@ public class ChatBody extends javax.swing.JPanel {
         init();
         
         // testing
-        String[] imgs = {"LGF5]+Yk^6#M@-5c,1J5@[or[Q6.", "L5BpbD1,0g2|I^-=5Y%N18$kR%?G"};
-        
-        addItemLeft("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出","Johnathan");
-        addItemLeft("hello", "Johnathan");
-        addDate("06/12/1998");
-        addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
-        addDate("TODAY");
-        addItemLeft(" 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情","Shiyun");
-        addItemLeft("", "Shiyun", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/tick.png")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/zzs.jpg")));
-        addItemRight("asd在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")));
-        addItemLeft("asd", "Shiyun", imgs);
-        addItemFile("dada", "Yaohong", "mydoc.pdf", "1MB");
-        addItemFileRight("", "mydoc.pdf", "1MB");
+//        String[] imgs = {"LGF5]+Yk^6#M@-5c,1J5@[or[Q6.", "L5BpbD1,0g2|I^-=5Y%N18$kR%?G"};
+//        
+//        addItemLeft("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出","Johnathan");
+//        addItemLeft("hello", "Johnathan");
+//        addDate("06/12/1998");
+//        addItemRight("hello 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情，需要将组件改为JtextPane来实现插入图片，改组件后出,情，需要将组件改为JtextPane来实现插入图片，改组件后出");
+//        addDate("TODAY");
+//        addItemLeft(" 在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情","Shiyun");
+//        addItemLeft("", "Shiyun", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/tick.png")),  new ImageIcon(getClass().getResource("/com/healthconnect/icon/zzs.jpg")));
+//        addItemRight("asd在做气泡聊天的时候，原本已经用Jtextarea已经实现。后来因为使用到emoji表情，需要将组件改为JtextPane来实现插入图片，改组件后出现了这样的问题,情", new ImageIcon(getClass().getResource("/com/healthconnect/icon/spongebob.png")), new ImageIcon(getClass().getResource("/com/healthconnect/icon/hutao.jpg")));
+//        addItemLeft("asd", "Shiyun", imgs);
+//        addItemFile("dada", "Yaohong", "mydoc.pdf", "1MB");
+//        addItemFileRight("", "mydoc.pdf", "1MB");
     }
     
     private void init(){
@@ -94,11 +99,12 @@ public class ChatBody extends javax.swing.JPanel {
         Chat_Right item = new Chat_Right();
         item.setText(text);
         item.setImage(images);
-        item.setTime("asd");
 //        item.setUserProfile(user);
         body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
+        item.setTime("sd");
+        scrollToBottom();
     }
         
 
@@ -110,6 +116,24 @@ public class ChatBody extends javax.swing.JPanel {
         body.repaint();
         body.revalidate();
     }
+        
+    
+    // add method to scroll to the bottom of chat panel
+    private void scrollToBottom(){   
+        JScrollBar vertiBar  = sp.getVerticalScrollBar();
+        AdjustmentListener downScroller = new AdjustmentListener(){
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e){
+                Adjustable adjustable = e.getAdjustable();
+                adjustable.setValue(adjustable.getMaximum());
+                vertiBar.removeAdjustmentListener(this);
+            }
+        };
+        vertiBar.addAdjustmentListener(downScroller);
+    }
+    
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

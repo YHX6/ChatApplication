@@ -12,6 +12,7 @@ public class PublicEvent {
     
     public static PublicEvent instance;
     private EventImageView eiv;
+    private EventChat ec;
     
     public static PublicEvent getInstance(){
         if(instance == null){
@@ -31,5 +32,13 @@ public class PublicEvent {
     
     public EventImageView getEventImageView(){
         return eiv;
+    }
+    
+    public void addEventChat(EventChat ec){
+        this.ec = ec;
+    }
+    
+    public EventChat getEventChat(){
+        return ec;
     }
 }

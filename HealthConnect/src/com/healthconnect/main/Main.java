@@ -71,6 +71,7 @@ public class Main extends javax.swing.JFrame {
         cmdMinimize = new javax.swing.JButton();
         cmdMinimize1 = new javax.swing.JButton();
         body = new javax.swing.JLayeredPane();
+        login = new com.healthconnect.form.Login();
         imageView = new com.healthconnect.form.View_Image();
         home = new com.healthconnect.form.Home();
 
@@ -134,6 +135,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         body.setLayout(new java.awt.CardLayout());
+        body.add(login, "card4");
         body.setLayer(imageView, javax.swing.JLayeredPane.POPUP_LAYER);
         body.add(imageView, "card3");
         body.add(home, "card2");
@@ -252,6 +254,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton cmdMinimize1;
     private com.healthconnect.form.Home home;
     private com.healthconnect.form.View_Image imageView;
+    private com.healthconnect.form.Login login;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables
 }
