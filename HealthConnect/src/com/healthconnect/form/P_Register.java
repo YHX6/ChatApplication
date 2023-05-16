@@ -4,7 +4,11 @@
  */
 package com.healthconnect.form;
 
+import com.healthconnect.event.EventMessage;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Message;
+import com.healthconnect.model.Model_Register;
+import javax.swing.Timer;
 
 /**
  *
@@ -37,6 +41,7 @@ public class P_Register extends javax.swing.JPanel {
         backBtn = new javax.swing.JButton();
         lbConfirmPwd = new javax.swing.JLabel();
         fieldConfirmPwd = new javax.swing.JPasswordField();
+        lbWarning = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -84,33 +89,43 @@ public class P_Register extends javax.swing.JPanel {
             }
         });
 
+        lbWarning.setBackground(new java.awt.Color(255, 0, 0));
+        lbWarning.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(registerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fieldPwd)
-                    .addComponent(fieldUserName, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbUserName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbPwd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                    .addComponent(fieldConfirmPwd)
-                    .addComponent(lbConfirmPwd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(registerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldPwd)
+                            .addComponent(fieldUserName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbUserName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbPwd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(fieldConfirmPwd)
+                            .addComponent(lbConfirmPwd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(14, 14, 14)
                 .addComponent(lbTitle)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbUserName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,11 +137,11 @@ public class P_Register extends javax.swing.JPanel {
                 .addComponent(lbConfirmPwd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldConfirmPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(registerBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backBtn)
-                .addContainerGap())
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -148,7 +163,44 @@ public class P_Register extends javax.swing.JPanel {
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         // TODO add your handling code here:
-        PublicEvent.getInstance().getEventLogin().register();
+        String userName = fieldUserName.getText().trim();
+        String password = String.valueOf(fieldPwd.getPassword());
+        String confirmPassword = String.valueOf(fieldConfirmPwd.getPassword());
+        if(userName.equals("")){
+            lbWarning.setForeground(new java.awt.Color(255, 0, 0));
+            lbWarning.setText("UserName is required!");
+            fieldUserName.grabFocus();
+        }else if(password.equals("")){
+            lbWarning.setForeground(new java.awt.Color(255, 0, 0));
+            lbWarning.setText("Password is required!");
+            fieldPwd.grabFocus();
+        }else if(!password.equals(confirmPassword)){
+            lbWarning.setForeground(new java.awt.Color(255, 0, 0));
+            lbWarning.setText("Password not the same!");
+            fieldConfirmPwd.grabFocus();
+        }else{
+            Model_Register data = new Model_Register(userName, password);
+            PublicEvent.getInstance().getEventLogin().register(data, new EventMessage() {
+                @Override
+                public void callMessage(Model_Message message) {
+//                    System.out.println(message.getMessage());
+                    if(!message.isAction()){
+                        lbWarning.setForeground(new java.awt.Color(255, 0, 0));
+                        lbWarning.setText(message.getMessage());
+                        
+                    }else{  // if ok, then login in
+                        lbWarning.setForeground(new java.awt.Color(0, 255 , 0));
+                        lbWarning.setText(message.getMessage());
+                        try {
+                            Thread.sleep(1000);
+                        } catch (Exception e) {
+                        }
+                        
+                        PublicEvent.getInstance().getEventLogin().login();
+                    }
+                }
+            });
+        }
     }//GEN-LAST:event_registerBtnActionPerformed
 
 
@@ -161,6 +213,7 @@ public class P_Register extends javax.swing.JPanel {
     private javax.swing.JLabel lbPwd;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUserName;
+    private javax.swing.JLabel lbWarning;
     private javax.swing.JButton registerBtn;
     // End of variables declaration//GEN-END:variables
 }

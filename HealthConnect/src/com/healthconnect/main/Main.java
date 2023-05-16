@@ -9,6 +9,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import com.healthconnect.event.EventImageView;
 import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.service.Service;
 import com.healthconnect.swing.ComponentResizer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -43,6 +44,7 @@ public class Main extends javax.swing.JFrame {
         imageView.setVisible(false); // we have two panel, to set imageview as invisible at first
         home.setVisible(false);
         initEvent();
+        Service.getInstance().startService();
     }
     
     

@@ -5,7 +5,12 @@
 package com.healthconnect.form;
 
 import com.healthconnect.event.EventLogin;
+import com.healthconnect.event.EventMessage;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Message;
+import com.healthconnect.model.Model_Register;
+import com.healthconnect.service.Service;
+import io.socket.client.Ack;
 
 /**
  *
@@ -44,8 +49,18 @@ public class Login extends javax.swing.JPanel {
            }
            
            @Override
-           public void register(){
-               System.out.println("register");
+           public void register(Model_Register data, EventMessage eventMessage){
+               // here, we use emit method to send a json data to the server, the sender method name is "register"
+               Service.getInstance().getClient().emit("register", data.toJsonObject(), new Ack(){
+                   @Override
+                   public void call(Object... os){
+                       if(os.length > 0){
+                           Model_Message ms = new Model_Message((boolean) os[0], os[1].toString());
+                           eventMessage.callMessage(ms);
+                           //call message back when done register
+                       }
+                   }
+               });
            }
            
            @Override
