@@ -13,6 +13,8 @@ public class PublicEvent {
     public static PublicEvent instance;
     private EventImageView eiv;
     private EventChat ec;
+    private EventLogin login;
+    private EventMain em;
     
     public static PublicEvent getInstance(){
         if(instance == null){
@@ -40,5 +42,21 @@ public class PublicEvent {
     
     public EventChat getEventChat(){
         return ec;
+    }
+    
+    public void addEventLogin(EventLogin login){
+        this.login = login;
+    }
+    
+    public EventLogin getEventLogin(){
+        return login;
+    }
+    
+    public void addEventMain(EventMain em){
+        this.em = em;
+    }
+    
+    public EventMain getEventMain(){
+        return em;
     }
 }

@@ -4,7 +4,10 @@
  */
 package com.healthconnect.main;
 
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import com.healthconnect.event.EventImageView;
+import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.swing.ComponentResizer;
 import java.awt.Dimension;
@@ -35,13 +38,16 @@ public class Main extends javax.swing.JFrame {
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10,10));
         
+        login.setVisible(true);
+        loading.setVisible(false);
         imageView.setVisible(false); // we have two panel, to set imageview as invisible at first
-        home.setVisible(true);
+        home.setVisible(false);
         initEvent();
     }
     
     
-    public void initEvent(){  // initialize/define the image event, and we can triger this event with the medthods in Chat_Image class
+    public void initEvent(){  
+        // initialize/define the image event, and we can triger this event with the medthods in Chat_Image class   
         PublicEvent.getInstance().addEventImageView(new EventImageView() {
             @Override
             public void viewImage(Icon image) {
@@ -51,6 +57,20 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void saveImage(Icon image){
                 System.out.println("hutao");
+            }
+        });
+        
+        
+        PublicEvent.getInstance().addEventMain(new EventMain(){
+            @Override
+            public void showLoading(boolean show){
+                loading.setVisible(show);
+            }
+            
+            @Override
+            public void initChat(){
+                home.setVisible(true);
+
             }
         });
         
@@ -71,6 +91,7 @@ public class Main extends javax.swing.JFrame {
         cmdMinimize = new javax.swing.JButton();
         cmdMinimize1 = new javax.swing.JButton();
         body = new javax.swing.JLayeredPane();
+        loading = new com.healthconnect.form.Loading();
         login = new com.healthconnect.form.Login();
         imageView = new com.healthconnect.form.View_Image();
         home = new com.healthconnect.form.Home();
@@ -135,6 +156,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         body.setLayout(new java.awt.CardLayout());
+        body.add(loading, "card5");
         body.add(login, "card4");
         body.setLayer(imageView, javax.swing.JLayeredPane.POPUP_LAYER);
         body.add(imageView, "card3");
@@ -153,7 +175,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout borderLayout = new javax.swing.GroupLayout(border);
@@ -237,9 +259,11 @@ public class Main extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        FlatArcIJTheme.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }
@@ -254,6 +278,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton cmdMinimize1;
     private com.healthconnect.form.Home home;
     private com.healthconnect.form.View_Image imageView;
+    private com.healthconnect.form.Loading loading;
     private com.healthconnect.form.Login login;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables

@@ -4,47 +4,30 @@
  */
 package com.healthconnect.form;
 
-import com.healthconnect.component.ChatBody;
-import com.healthconnect.component.ChatBottom;
-import com.healthconnect.component.ChatTitle;
-import com.healthconnect.event.EventChat;
-import com.healthconnect.event.PublicEvent;
-import net.miginfocom.swing.MigLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
  * @author xyh10
  */
-public class Chat extends javax.swing.JPanel {
+public class Loading extends javax.swing.JComponent {
 
     /**
-     * Creates new form Menu_Left
+     * Creates new form Loading
      */
-    public Chat() {
+    public Loading() {
         initComponents();
-        init();
-    }
-    
-    
-    private void init(){
-        setLayout(new MigLayout("fillx", "0[fill]0", "[]0[100%, bottom]0[shrink 0]0"));
-        
-        ChatTitle chatTitle = new ChatTitle();
-        ChatBody chatBody = new ChatBody();
-        ChatBottom chatBottom = new ChatBottom();
-        
-        PublicEvent.getInstance().addEventChat(new EventChat(){   // register and define send message eveent
-            @Override
-            public void sendMessage(String text){
-                chatBody.addItemRight(text);
-            }
-        });
-        
-        add(chatTitle, "wrap");
-        add(chatBody, "wrap");
-        add(chatBottom, "h ::50%");
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(new Color(255,255,255,200));  // set the background color
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,21 +37,30 @@ public class Chat extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1 = new javax.swing.JLabel();
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/healthconnect/icon/loading3.gif"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 873, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(384, 384, 384)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addGap(307, 307, 307))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

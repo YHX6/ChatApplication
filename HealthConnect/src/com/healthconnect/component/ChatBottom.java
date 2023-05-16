@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -48,6 +49,8 @@ public class ChatBottom extends javax.swing.JPanel {
             }
         
         });
+        
+        txt.setBorder(new EmptyBorder(5,5,5,5));
         txt.setHintText("Write Message Here...");
         add(scroll, "w 100%");  
         
@@ -89,6 +92,7 @@ public class ChatBottom extends javax.swing.JPanel {
         // scroll bar for txt
         scroll.setViewportView(txt);
         ScrollBar sb = new ScrollBar();
+        sb.setBackground(new Color(229,229,229));
         sb.setPreferredSize(new Dimension(5, 10));
         scroll.setVerticalScrollBar(sb);
         add(sb);
