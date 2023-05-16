@@ -42,7 +42,7 @@ public class Service {
         server.addConnectListener(new ConnectListener(){
             @Override
             public void onConnect(SocketIOClient sioc){
-                textArea.append("Client connected: " +  sioc.getRemoteAddress() + "\n");
+                textArea.append("Client connected:     " +  sioc.getRemoteAddress() + "\n");
             }
         });
         
