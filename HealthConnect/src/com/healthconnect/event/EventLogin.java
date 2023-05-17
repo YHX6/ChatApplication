@@ -4,14 +4,18 @@
  */
 package com.healthconnect.event;
 
+import com.healthconnect.model.Model_Login;
+import com.healthconnect.model.Model_Message;
+import com.healthconnect.model.Model_Register;
+
 /**
  *
  * @author xyh10
  */
 public interface EventLogin {
     
-    public void login();
-    public void register();
+    public void login(Model_Login data);
+    public void register(Model_Register data, EventMessage eventMessage);
     public void goRegister();
     public void goLogin();
     

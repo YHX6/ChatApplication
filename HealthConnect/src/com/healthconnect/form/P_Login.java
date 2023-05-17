@@ -5,6 +5,7 @@
 package com.healthconnect.form;
 
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Login;
 
 /**
  *
@@ -124,7 +125,8 @@ public class P_Login extends javax.swing.JPanel {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        PublicEvent.getInstance().getEventLogin().login();
+        PublicEvent.getInstance().getEventLogin().login(new Model_Login(fieldUserName.getText(), String.valueOf(fieldPwd.getPassword())));
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
 
