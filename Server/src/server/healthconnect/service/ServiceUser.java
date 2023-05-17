@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import server.healthconnect.connection.DatabaseConnection;
+import server.healthconnect.model.Model_Login;
 import server.healthconnect.model.Model_Message;
 import server.healthconnect.model.Model_Register;
 import server.healthconnect.model.Model_User_Account;
@@ -85,6 +86,27 @@ public class ServiceUser {
         return message;
     }
     
+    public Model_User_Account login(Model_Login login) throws Exception{
+        Model_User_Account data = null;
+        PreparedStatement p = con.prepareStatement(LOGIN);
+        p.setString(1, login.getUserName());
+        p.setString(2, login.getPassword());
+        ResultSet r = p.executeQuery();
+        
+        if(r.next()){
+            int userID = r.getInt(1);
+            String userName = r.getString(2);
+            String gender = r.getString(3);
+            String image = r.getString(4);
+            data = new Model_User_Account(userID, userName, gender, image, true);
+        }
+        r.close();
+        p.close();
+        
+        return data;
+    }
+    
+    
     public List<Model_User_Account> getUser(int exitUser) throws SQLException{
         List<Model_User_Account> list = new ArrayList<>();
         PreparedStatement p = con.prepareStatement(SELECT_USER_ACCOUNT);
@@ -104,6 +126,7 @@ public class ServiceUser {
     
     
     //sql
+    private final String LOGIN = "select UserID, user_account.UserName, Gender, ImageString from `user` join user_account using(UserID) where `user`.UserName=binary(?) and `user`.Password = binary(?) and user_account.Status = '1';";
     private final String SELECT_USER_ACCOUNT = "select UserID, UserName, Gender, ImageString from user_account where user_account.Status ='1' and UserID<>?";
     private final String INSER_USER = "insert into user (UserName, `Password`) values (?, ?)";
     private final String CHECK_USER = "select UserID from user where UserName = ? limit 1";

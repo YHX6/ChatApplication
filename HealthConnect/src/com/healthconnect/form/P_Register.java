@@ -195,8 +195,8 @@ public class P_Register extends javax.swing.JPanel {
                             Thread.sleep(1000);
                         } catch (Exception e) {
                         }
-                        
-                        PublicEvent.getInstance().getEventLogin().login();
+                        PublicEvent.getInstance().getEventMain().initChat();
+//                        PublicEvent.getInstance().getEventLogin().login();
                     }
                 }
             });

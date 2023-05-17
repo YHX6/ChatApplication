@@ -13,6 +13,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JTextArea;
+import server.healthconnect.model.Model_Login;
 import server.healthconnect.model.Model_Message;
 import server.healthconnect.model.Model_Register;
 import server.healthconnect.model.Model_User_Account;
@@ -66,6 +67,7 @@ public class Service {
             }
             
         });
+        //add eventlistner, create menu left based on uses in the database
         server.addEventListener("list_user", Integer.class, new DataListener<Integer>(){
             @Override
             public void onData(SocketIOClient sioc, Integer userID, AckRequest ar) throws Exception{
@@ -77,6 +79,20 @@ public class Service {
                 }
             }
         });
+        //
+        server.addEventListener("login", Model_Login.class, new DataListener<Model_Login>(){
+            @Override
+            public void onData(SocketIOClient sioc, Model_Login t, AckRequest ar) throws Exception{
+                Model_User_Account login = serviceUser.login(t);
+                if(login != null){
+                    ar.sendAckData(true, login);
+                }else{
+                    ar.sendAckData(false);
+                }
+                
+            }
+        });
+        
         server.start();
         textArea.setText("Server start on port: " + PORT_NUMBER + "\n");
     }
