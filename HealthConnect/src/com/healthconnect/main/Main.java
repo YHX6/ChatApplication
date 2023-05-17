@@ -4,13 +4,13 @@
  */
 package com.healthconnect.main;
 
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import com.healthconnect.event.EventImageView;
 import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.ComponentResizer;
+import io.socket.emitter.Emitter;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.Icon;
@@ -72,7 +72,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void initChat(){
                 home.setVisible(true);
-
+                Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());  // send id for this client to server and revives all chats users
             }
         });
         

@@ -11,6 +11,7 @@ package server.healthconnect.model;
 public class Model_Message {
     private boolean action;
     private String message;
+    private Object data;
 
     public Model_Message() {
     }
@@ -34,6 +35,14 @@ public class Model_Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
     
     

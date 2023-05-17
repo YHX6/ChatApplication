@@ -15,6 +15,7 @@ public class PublicEvent {
     private EventChat ec;
     private EventLogin login;
     private EventMain em;
+    private EventMenuLeft eml;
     
     public static PublicEvent getInstance(){
         if(instance == null){
@@ -58,5 +59,13 @@ public class PublicEvent {
     
     public EventMain getEventMain(){
         return em;
+    }
+    
+    public void addEventMenuLeft(EventMenuLeft eml){
+        this.eml = eml;
+    }
+    
+    public EventMenuLeft getEventMenuLeft(){
+        return eml;
     }
 }

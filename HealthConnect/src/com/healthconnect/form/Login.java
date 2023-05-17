@@ -9,6 +9,7 @@ import com.healthconnect.event.EventMessage;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_Message;
 import com.healthconnect.model.Model_Register;
+import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.service.Service;
 import io.socket.client.Ack;
 
@@ -53,10 +54,15 @@ public class Login extends javax.swing.JPanel {
                // here, we use emit method to send a json data to the server, the sender method name is "register"
                Service.getInstance().getClient().emit("register", data.toJsonObject(), new Ack(){
                    @Override
-                   public void call(Object... os){
+                   public void call(Object... os){   // recieve objects from server side. check with Service.java in server side 
                        if(os.length > 0){
                            Model_Message ms = new Model_Message((boolean) os[0], os[1].toString());
                            eventMessage.callMessage(ms);
+                           if(ms.isAction()){
+                               Model_User_Account user =new Model_User_Account(os[2]);
+//                               System.out.println(user.getUserID() + " ");
+                                Service.getInstance().setUser(user);
+                           }
                            //call message back when done register
                        }
                    }
