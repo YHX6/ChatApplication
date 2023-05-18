@@ -10,7 +10,6 @@ import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.ComponentResizer;
-import io.socket.emitter.Emitter;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.Icon;
