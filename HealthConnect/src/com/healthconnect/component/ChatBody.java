@@ -4,6 +4,8 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.app.MessageType;
+import com.healthconnect.emoji.Emoji;
 import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_Send_Message;
 import com.healthconnect.swing.ScrollBar;
@@ -57,10 +59,18 @@ public class ChatBody extends javax.swing.JPanel {
     
         
     public void addItemLeft(Model_Receive_Message data){
-        Chat_Left item = new Chat_Left();
-        item.setText(data.getText());
-        item.setTime("asd");
-        body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        if(data.getMessageType() == MessageType.TEXT){
+            Chat_Left item = new Chat_Left();
+            item.setText(data.getText());
+            item.setTime("asd");
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        }else if(data.getMessageType() == MessageType.EMOJI){
+            Chat_Left item = new Chat_Left();
+            item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
+            item.setTime("asd");
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        }
+        
         repaint();
         revalidate();
     }
@@ -80,7 +90,7 @@ public class ChatBody extends javax.swing.JPanel {
         Chat_Right item = new Chat_Right();
         item.setText(text);
         item.setFile(filename, filesize);
-
+        
         body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
@@ -88,12 +98,28 @@ public class ChatBody extends javax.swing.JPanel {
     
         
     public void addItemRight(Model_Send_Message data){
-        Chat_Right item = new Chat_Right();
-        item.setText(data.getText());
-        body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+        if(data.getMessageType() == MessageType.TEXT){
+            Chat_Right item = new Chat_Right();
+            item.setText(data.getText()); 
+            item.setTime("sd");
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+           
+        }else if(data.getMessageType() == MessageType.EMOJI){
+            Chat_Right item = new Chat_Right();
+            item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
+            item.setTime("sd");
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+            
+        }else if(data.getMessageType() == MessageType.IMAGE){
+            Chat_Right item = new Chat_Right();
+            item.setText("");
+            item.setImage(data.getFile());
+            item.setTime("sd");
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+            
+        }
         repaint();
         revalidate();
-        item.setTime("sd");
         scrollToBottom();
     }
         

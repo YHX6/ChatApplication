@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.model.Model_File_Sender;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -14,6 +15,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.border.EmptyBorder;
 
@@ -42,9 +44,11 @@ public class Chat_Item extends javax.swing.JLayeredPane {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(getBackground());
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        if(getBackground() != null){
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(getBackground());
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        }
         super.paintComponent(g); 
     }
     
@@ -97,16 +101,16 @@ public class Chat_Item extends javax.swing.JLayeredPane {
         }
     }
     
-    public void setImage(boolean right, Icon... images){
-        if(images.length > 0){
-            JLayeredPane layer = new JLayeredPane();
-            layer.setLayout(new FlowLayout(right?FlowLayout.RIGHT : FlowLayout.LEFT));
-            layer.setBorder(new EmptyBorder(0,5,0,5));
-            Chat_Image chat_Image = new Chat_Image(right);
-            chat_Image.addImage(images);
-            layer.add(chat_Image);
-            add(layer); // add layerpane to Chat_Item
-        }
+    public void setImage(boolean right, Model_File_Sender fileSender){
+      
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(right ? FlowLayout.RIGHT : FlowLayout.LEFT));
+        layer.setBorder(new EmptyBorder(0, 5, 0, 5));
+        Chat_Image chat_Image = new Chat_Image(right);
+        chat_Image.addImage(fileSender);
+        layer.add(chat_Image);
+        add(layer); // add layerpane to Chat_Item
+      
         
     }
     
@@ -129,6 +133,18 @@ public class Chat_Item extends javax.swing.JLayeredPane {
         layer.add(item);
         
         add(layer); // add layerpane to Chat_Item
+    }
+    
+    
+    public void setEmoji(boolean right, Icon icon){
+        JLayeredPane layer = new JLayeredPane();
+        layer.setLayout(new FlowLayout(FlowLayout.LEFT));
+        layer.setBorder(new EmptyBorder(0,5,0,5));
+
+        layer.add(new JLabel(icon));
+        
+        add(layer); // add layerpane to Chat_Item
+        setBackground(null);
     }
     
     

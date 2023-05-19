@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.app.MessageType;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_Send_Message;
 import com.healthconnect.model.Model_User_Account;
@@ -53,6 +54,9 @@ public class ChatBottom extends javax.swing.JPanel {
             @Override
             public void keyTyped(KeyEvent ke){
                 refresh();
+                if(ke.getKeyChar()==10 && ke.isControlDown()){  // press control+enter
+                    eventSend(txt);
+                }
             }
         
         });
@@ -83,19 +87,7 @@ public class ChatBottom extends javax.swing.JPanel {
         cmd.addActionListener(new ActionListener(){     // add send message event
             @Override
             public void actionPerformed(ActionEvent ae){
-                String text = txt.getText().trim();
-                if(!txt.equals("")){
-                    
-                    Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), text);                
-                    send(message);                      // send to server
-                    PublicEvent.getInstance().getEventChat().sendMessage(message);     // add to text pane
-                    
-                    txt.setText("");
-                    txt.grabFocus();
-                    refresh();
-                }else{
-                    txt.grabFocus();
-                }
+                eventSend(txt);
             }
         
         });
@@ -133,10 +125,22 @@ public class ChatBottom extends javax.swing.JPanel {
         panelMore = new Panel_More();
         panelMore.setVisible(false);
         add(panelMore, "dock south,h 0!");  //set height 0
-        
-        
-
     }
+    
+    private void eventSend(JIMSendTextPane txt){            
+        String text = txt.getText().trim();       
+        if(!txt.equals("")){
+            Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), text, MessageType.TEXT);                      
+            send(message);                      // send to server     
+            PublicEvent.getInstance().getEventChat().sendMessage(message);     // add to text pane     
+            txt.setText("");     
+            txt.grabFocus();                   
+            refresh();              
+        }else{           
+            txt.grabFocus();     
+        }
+    }
+    
     
     private void send(Model_Send_Message data){
         Service.getInstance().getClient().emit("send_to_user", data.toJSONObject());
@@ -153,6 +157,7 @@ public class ChatBottom extends javax.swing.JPanel {
 
     public void setUser(Model_User_Account user) {
         this.user = user;
+        panelMore.setUser(user);
     } 
 
     private Panel_More panelMore;

@@ -6,6 +6,7 @@
 package com.healthconnect.component;
 
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_File_Sender;
 import com.healthconnect.swing.PictureBox;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -32,14 +33,15 @@ public class Chat_Image extends javax.swing.JLayeredPane {
         setLayout(new MigLayout("","0[" +  (right ? "right":"left") + "]0","2[]2"));
     }
     
-    public void addImage(Icon... images ){
-        for(Icon image:images){
-            PictureBox pic = new PictureBox();
-            pic.setPreferredSize(getAutoSize(image, 200, 200));
-            pic.setImage(image);
-            addEvent(pic, image);   // add view image event for images
-            add(pic, "wrap");
-        }
+    public void addImage(Model_File_Sender fileSender ){
+        
+        Icon image = new ImageIcon(fileSender.getFile().getAbsolutePath());
+        Image_Item pic = new Image_Item();
+        pic.setPreferredSize(getAutoSize(image, 200, 200));
+        pic.setImage(image, fileSender);
+        addEvent(pic, image);   // add view image event for images
+        add(pic, "wrap");
+        
     }   
     
     public void addImage(String... imageEncodingStrings ){

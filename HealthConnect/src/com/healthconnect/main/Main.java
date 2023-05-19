@@ -113,7 +113,9 @@ public class Main extends javax.swing.JFrame {
         home = new com.healthconnect.form.Home();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1000, 600));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         border.setBackground(new java.awt.Color(237, 237, 237));
 
@@ -183,7 +185,7 @@ public class Main extends javax.swing.JFrame {
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
+            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
