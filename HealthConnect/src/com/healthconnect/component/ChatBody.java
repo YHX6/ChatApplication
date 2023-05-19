@@ -100,15 +100,23 @@ public class ChatBody extends javax.swing.JPanel {
     public void addItemRight(Model_Send_Message data){
         if(data.getMessageType() == MessageType.TEXT){
             Chat_Right item = new Chat_Right();
-            item.setText(data.getText());
-            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+            item.setText(data.getText()); 
             item.setTime("sd");
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+           
         }else if(data.getMessageType() == MessageType.EMOJI){
             Chat_Right item = new Chat_Right();
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
             item.setTime("sd");
-        
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+            
+        }else if(data.getMessageType() == MessageType.IMAGE){
+            Chat_Right item = new Chat_Right();
+            item.setText("");
+            item.setImage(data.getFile());
+            item.setTime("sd");
+            body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
+            
         }
         repaint();
         revalidate();

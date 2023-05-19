@@ -17,6 +17,7 @@ public class Model_Send_Message {
     private int toUserID;
     private String text;
     private MessageType messageType;
+    private Model_File_Sender file;
 
     public Model_Send_Message(int fromUserID, int toUserID, String text, MessageType messageType) {
         this.fromUserID = fromUserID;
@@ -60,6 +61,14 @@ public class Model_Send_Message {
         this.messageType = messageType;
     }
 
+    public Model_File_Sender getFile() {
+        return file;
+    }
+
+    public void setFile(Model_File_Sender file) {
+        this.file = file;
+    }
+
    
     
     public JSONObject toJSONObject(){
@@ -69,6 +78,11 @@ public class Model_Send_Message {
             obj.put("toUserID", toUserID);
             obj.put("text", text);
             obj.put("messageType", messageType.getValue());
+            if(messageType== MessageType.FILE || messageType == MessageType.IMAGE){
+                obj.put("text", file.getFileExtensions());
+            }else{
+                obj.put("text", text);
+            }
             return obj;
         } catch (JSONException e) {
             return null;

@@ -21,3 +21,11 @@ create table user_account (
     primary key (UserID)
 
 );
+
+create table files (
+	FileID int not null auto_increment,
+    FileExtension varchar(255),
+    BlurHash varchar(255),
+    Status char(1) not null default '0',
+    primary key (FileID)
+);

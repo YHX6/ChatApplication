@@ -5,6 +5,7 @@
 package com.healthconnect.component;
 
 import com.healthconnect.blueHash.BlurHash;
+import com.healthconnect.model.Model_File_Sender;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -32,6 +33,12 @@ public class Image_Item extends javax.swing.JLayeredPane {
         Icon icon = new ImageIcon(image);
         picBox.setImage(icon);
     }
+    
+        
+    public void setImage(Icon image, Model_File_Sender fileSender){
+        
+        picBox.setImage(image);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +53,6 @@ public class Image_Item extends javax.swing.JLayeredPane {
         progress1 = new com.healthconnect.swing.Progress();
 
         progress1.setForeground(new java.awt.Color(255, 255, 255));
-        progress1.setValue(50);
         progress1.setProgressType(com.healthconnect.swing.Progress.ProgressType.CANCEL);
 
         picBox.setLayer(progress1, javax.swing.JLayeredPane.DEFAULT_LAYER);

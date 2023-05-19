@@ -5,11 +5,15 @@
 package com.healthconnect.service;
 
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_File_Sender;
 import com.healthconnect.model.Model_Receive_Message;
+import com.healthconnect.model.Model_Send_Message;
 import com.healthconnect.model.Model_User_Account;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ public class Service {
     private final int PORT_NUMBER = 9812;
     private final String IP = "localhost";
     private Model_User_Account user;
+    private List<Model_File_Sender> fileSenders;
     
     public static Service getInstance(){
         if(instance == null) instance = new Service();
@@ -32,7 +37,7 @@ public class Service {
     }
     
     public Service( ){
-        
+        fileSenders = new ArrayList<>();
     }
 
     public Socket getClient() {
@@ -93,6 +98,23 @@ public class Service {
 
     public void setUser(Model_User_Account user) {
         this.user = user;
+    }
+    
+    public Model_File_Sender addFile(File file, Model_Send_Message message) throws IOException{
+        Model_File_Sender data = new Model_File_Sender(file, client, message);
+        message.setFile(data);
+        fileSenders.add(data);
+        if(fileSenders.size() == 1){  // send one by one
+            data.initSend();
+        }
+        return  data;  
+    }
+    
+    public void fileSendFinish(Model_File_Sender data) throws IOException{
+        fileSenders.remove(data);
+        if(!fileSenders.isEmpty()){
+            fileSenders.get(0).initSend();
+        }
     }
     
 }
