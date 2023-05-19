@@ -12,15 +12,15 @@ package server.healthconnect.model;
 public class Model_Receive_Message {
     private int fromUserID;
     private String text;
+    private int messageType;
 
     public Model_Receive_Message() {
     }
-    
 
-    public Model_Receive_Message(int fromUserID, String text) {
+    public Model_Receive_Message(int fromUserID, String text, int messageType) {
         this.fromUserID = fromUserID;
-
         this.text = text;
+        this.messageType = messageType;
     }
 
     public int getFromUserID() {
@@ -31,7 +31,6 @@ public class Model_Receive_Message {
         this.fromUserID = fromUserID;
     }
 
-  
     public String getText() {
         return text;
     }
@@ -39,6 +38,16 @@ public class Model_Receive_Message {
     public void setText(String text) {
         this.text = text;
     }
+
+    public int getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
+
+    
     
     
     

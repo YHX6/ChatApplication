@@ -4,8 +4,18 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.app.MessageType;
+import com.healthconnect.emoji.Emoji;
+import com.healthconnect.emoji.Model_Emoji;
+import com.healthconnect.event.PublicEvent;
 import com.healthconnect.main.Main;
+import com.healthconnect.model.Model_Send_Message;
+import com.healthconnect.model.Model_User_Account;
+import com.healthconnect.service.Service;
+import com.healthconnect.swing.ScrollBar;
 import com.healthconnect.swing.WrapLayout;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -27,10 +38,20 @@ public class Panel_More extends javax.swing.JPanel {
     /**
      * Creates new form Panel_More
      */
+    private Model_User_Account user;
     public Panel_More() {
         initComponents();
         init();
     }
+
+    public Model_User_Account getUser() {
+        return user;
+    }
+
+    public void setUser(Model_User_Account user) {
+        this.user = user;
+    }
+    
     
     private void init(){
         setLayout(new MigLayout("fillx"));
@@ -48,7 +69,7 @@ public class Panel_More extends javax.swing.JPanel {
         JScrollPane ch = new JScrollPane(panelDetail);
         ch.setBorder(null);
         ch.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        ch.setVerticalScrollBar(new JScrollBar());
+        ch.setVerticalScrollBar(new ScrollBar());
   
         add(ch, "w 100%, h 100%");
     }
@@ -72,16 +93,79 @@ public class Panel_More extends javax.swing.JPanel {
     private JButton getEmojiStyle1(){
         //
         OptionButton cmd = new OptionButton();
-        cmd.setIcon(new ImageIcon(getClass().getResource("/com/healthconnect/emoji/icon/EMOJI.png")));
+        cmd.setIcon(Emoji.getInstance().getEmoji(1).toSize(25, 25).getIcon());
+        cmd.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearSelected();
+                cmd.setSelected(true);
+                panelDetail.removeAll();
+                for(Model_Emoji d:Emoji.getInstance().getStyle1()){
+                    panelDetail.add(getButton(d));
+         
+                }
+                panelDetail.repaint();
+                panelDetail.revalidate();
+            }
+            
+        
+        });
+        
         return cmd;
     }
         
     private JButton getEmojiStyle2(){
         //
         OptionButton cmd = new OptionButton();
-        cmd.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/com/healthconnect/emoji/icon/cxk1.jpg")).getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        cmd.setIcon(Emoji.getInstance().getEmoji(21).toSize(25, 25).getIcon());
+        cmd.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearSelected();
+                cmd.setSelected(true);
+                panelDetail.removeAll();
+                for(Model_Emoji d:Emoji.getInstance().getStyle2()){
+                    panelDetail.add(getButton(d));
+                }
+                panelDetail.repaint();
+                panelDetail.revalidate();
+            }
+            
+        
+        });
+        
         return cmd;
     }
+    
+    private JButton getButton(Model_Emoji data){
+        JButton c = new JButton(data.getIcon());
+        c.setName(data.getId() + "");
+        c.setBorder(new EmptyBorder(3, 3, 3, 3));
+        c.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        c.setContentAreaFilled(false);
+        c.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Model_Send_Message message = new Model_Send_Message( Service.getInstance().getUser().getUserID(), user.getUserID(), data.getId() + "", MessageType.EMOJI);
+                sendMessage(message);
+                PublicEvent.getInstance().getEventChat().sendMessage(message);
+            }
+        });
+        return c;
+    }
+    
+    private void sendMessage(Model_Send_Message data){
+        Service.getInstance().getClient().emit("send_to_user", data.toJSONObject());
+    }
+    
+    private void clearSelected(){
+        for(Component c:panelHeader.getComponents()){
+            if(c instanceof OptionButton){
+                ((OptionButton) c).setSelected(false);
+            }
+        }
+    }
+    
     
     private JPanel panelHeader;
     private JPanel panelDetail;

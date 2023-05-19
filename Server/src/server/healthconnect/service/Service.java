@@ -156,7 +156,7 @@ public class Service {
     private void sendToClient(Model_Send_Message data){
         for(Model_Client c:listClients){
             if(c.getUser().getUserID() == data.getToUserID()){
-                c.getClient().sendEvent("receive_ms", new Model_Receive_Message(data.getFromUserID(), data.getText()));
+                c.getClient().sendEvent("receive_ms", new Model_Receive_Message(data.getFromUserID(), data.getText(), data.getMessageType()));
                 break;
             }
         }

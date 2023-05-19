@@ -43,6 +43,11 @@ public class Chat_Left extends javax.swing.JLayeredPane {
     public void setFile(String filename, String filesize){
         txt.setFile(filename, filesize);
     }
+        
+    public void setEmoji(Icon icon){
+        txt.hideText();
+        txt.setEmoji(false, icon);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

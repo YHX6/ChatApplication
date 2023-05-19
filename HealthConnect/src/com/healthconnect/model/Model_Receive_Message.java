@@ -4,6 +4,7 @@
  */
 package com.healthconnect.model;
 
+import com.healthconnect.app.MessageType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,24 +15,38 @@ import org.json.JSONObject;
 public class Model_Receive_Message {
     private int fromUserID;
     private String text;
+    private MessageType messageType;
 
     public Model_Receive_Message() {
+    }
+
+    public Model_Receive_Message(int fromUserID, String text, MessageType messageType) {
+        this.fromUserID = fromUserID;
+        this.text = text;
+        this.messageType = messageType;
     }
     
     public Model_Receive_Message(Object json) {
         JSONObject obj = (JSONObject) json;
         try {
             fromUserID = obj.getInt("fromUserID");
-            text = obj.getString("text");         
+            text = obj.getString("text");      
+            messageType = MessageType.toMessageType(obj.getInt("messageType"));
         } catch (JSONException e) {
             System.err.println(e);
         }
     }
 
-    public Model_Receive_Message(int fromUserID, String text) {
-        this.fromUserID = fromUserID;
-
-        this.text = text;
+    public JSONObject toJSONObject(){
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("fromUserID", fromUserID);
+            obj.put("text", text);
+            obj.put("messageType", messageType.getValue());
+            return obj;
+        } catch (JSONException e) {
+            return null;
+        }
     }
 
     public int getFromUserID() {
@@ -42,7 +57,6 @@ public class Model_Receive_Message {
         this.fromUserID = fromUserID;
     }
 
-  
     public String getText() {
         return text;
     }
@@ -50,16 +64,13 @@ public class Model_Receive_Message {
     public void setText(String text) {
         this.text = text;
     }
-    
-    public JSONObject toJSONObject(){
-        try {
-            JSONObject obj = new JSONObject();
-            obj.put("fromUserID", fromUserID);
-            obj.put("text", text);
-            return obj;
-        } catch (JSONException e) {
-            return null;
-        }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
     
     
