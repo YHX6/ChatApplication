@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.swing.ActiveStatus;
 import java.awt.Color;
@@ -20,6 +21,7 @@ public class Item_People extends javax.swing.JPanel {
      * Creates new form Item_People
      */
     private final Model_User_Account user;
+    private boolean mouseOver;
     
     public Item_People(Model_User_Account user) {
         this.user = user;
@@ -48,11 +50,20 @@ public class Item_People extends javax.swing.JPanel {
             @Override
             public void mouseEntered(MouseEvent me){
                 setBackground(new Color(229,229,229));
+                mouseOver = true;
             }
             
             @Override
             public void mouseExited(MouseEvent me){
                 setBackground(new Color(242,242,242));
+                mouseOver = false;
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent me){
+                if(mouseOver){
+                    PublicEvent.getInstance().getEventMain().selectUser(user);
+                }
             }
             
             

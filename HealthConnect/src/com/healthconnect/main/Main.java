@@ -8,6 +8,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import com.healthconnect.event.EventImageView;
 import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.ComponentResizer;
 import java.awt.Dimension;
@@ -74,6 +75,19 @@ public class Main extends javax.swing.JFrame {
                 login.setVisible(false);
                 Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());  // send id for this client to server and revives all chats users
             }
+
+            @Override
+            public void selectUser(Model_User_Account user) {
+               home.setUser(user);
+            }
+
+            @Override
+            public void updateUser(Model_User_Account user) {
+              home.updateUser(user);
+            }
+            
+            
+            
         });
         
     }

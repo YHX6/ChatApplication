@@ -18,7 +18,9 @@ import javax.swing.JTextArea;
 import server.healthconnect.model.Model_Client;
 import server.healthconnect.model.Model_Login;
 import server.healthconnect.model.Model_Message;
+import server.healthconnect.model.Model_Receive_Message;
 import server.healthconnect.model.Model_Register;
+import server.healthconnect.model.Model_Send_Message;
 import server.healthconnect.model.Model_User_Account;
 
 /**
@@ -111,6 +113,16 @@ public class Service {
             }
         });
         
+        server.addEventListener("send_to_user", Model_Send_Message.class, new DataListener<Model_Send_Message>(){
+            @Override
+            public void onData(SocketIOClient sioc, Model_Send_Message t, AckRequest ar) throws Exception {
+                sendToClient(t);
+            }
+            
+            
+        });
+        
+        
         server.start();
         textArea.setText("Server start on port: " + PORT_NUMBER + "\n");
     }
@@ -141,6 +153,14 @@ public class Service {
         return 0;
     }
     
+    private void sendToClient(Model_Send_Message data){
+        for(Model_Client c:listClients){
+            if(c.getUser().getUserID() == data.getToUserID()){
+                c.getClient().sendEvent("receive_ms", new Model_Receive_Message(data.getFromUserID(), data.getText()));
+                break;
+            }
+        }
+    }
     
     
 }

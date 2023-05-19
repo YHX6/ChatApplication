@@ -9,6 +9,9 @@ import com.healthconnect.component.ChatBottom;
 import com.healthconnect.component.ChatTitle;
 import com.healthconnect.event.EventChat;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Receive_Message;
+import com.healthconnect.model.Model_Send_Message;
+import com.healthconnect.model.Model_User_Account;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -20,6 +23,10 @@ public class Chat extends javax.swing.JPanel {
     /**
      * Creates new form Menu_Left
      */
+    private ChatTitle chatTitle;
+    private ChatBody chatBody;
+    private ChatBottom chatBottom;
+    
     public Chat() {
         initComponents();
         init();
@@ -29,22 +36,41 @@ public class Chat extends javax.swing.JPanel {
     private void init(){
         setLayout(new MigLayout("fillx", "0[fill]0", "[]0[100%, bottom]0[shrink 0]0"));
         
-        ChatTitle chatTitle = new ChatTitle();
-        ChatBody chatBody = new ChatBody();
-        ChatBottom chatBottom = new ChatBottom();
+        chatTitle = new ChatTitle();
+        chatBody = new ChatBody();
+        chatBottom = new ChatBottom();
         
         PublicEvent.getInstance().addEventChat(new EventChat(){   // register and define send message eveent
             @Override
-            public void sendMessage(String text){
-                chatBody.addItemRight(text);
+            public void sendMessage(Model_Send_Message data) {
+                chatBody.addItemRight(data);
+            }
+            
+            @Override
+            public void receiveMessage(Model_Receive_Message data) {
+                if(chatTitle.getUser().getUserID() == data.getFromUserID()){
+                    chatBody.addItemLeft(data);
+                }
             }
         });
         
         add(chatTitle, "wrap");
         add(chatBody, "wrap");
-        add(chatBottom, "h ::50%");
+        add(chatBottom, "h ::50%");  
     }
 
+        
+    public void setUser(Model_User_Account user){
+        chatTitle.setUserName(user);
+        chatBottom.setUser(user);
+        chatBody.clearChat();
+    }
+    
+    public void updateUser(Model_User_Account user){
+         chatTitle.updateUser(user);
+        chatBottom.setUser(user);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

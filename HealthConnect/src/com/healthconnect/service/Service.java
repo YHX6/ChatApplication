@@ -5,6 +5,7 @@
 package com.healthconnect.service;
 
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_User_Account;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -69,7 +70,13 @@ public class Service {
                     
                 }
             });
-            
+            client.on("receive_ms", new Emitter.Listener(){
+                @Override
+                public void call(Object... os){
+                    Model_Receive_Message message = new Model_Receive_Message(os[0]);
+                    PublicEvent.getInstance().getEventChat().receiveMessage(message);
+                }
+            });
             client.open();
         } catch (URISyntaxException e) {
             error(e);
