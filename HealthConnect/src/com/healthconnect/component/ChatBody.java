@@ -69,6 +69,12 @@ public class ChatBody extends javax.swing.JPanel {
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
             item.setTime("asd");
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        }else if(data.getMessageType() == MessageType.IMAGE){
+            Chat_Left item = new Chat_Left();
+            item.setText("");
+            item.setImage(data.getDataImage());
+            item.setTime("asd");
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }
         
         repaint();

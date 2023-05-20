@@ -4,6 +4,7 @@
  */
 package com.healthconnect.model;
 
+import com.healthconnect.event.EventFileSender;
 import com.healthconnect.service.Service;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
@@ -23,6 +24,7 @@ public class Model_File_Sender {
     private long fileSize;
     private RandomAccessFile accFile;
     private Socket socket;
+    private EventFileSender event;
 
     public Model_File_Sender() {
     }
@@ -34,6 +36,14 @@ public class Model_File_Sender {
         this.message = message;
         fileExtensions = getExtensions(file.getName());
         fileSize = accFile.length();    
+    }
+
+    public EventFileSender getEvent() {
+        return event;
+    }
+
+    public void addEvent(EventFileSender event) {
+        this.event = event;
     }
 
     public Model_Send_Message getMessage() {
@@ -110,7 +120,6 @@ public class Model_File_Sender {
     }
     
     public void initSend() throws IOException{
-        S
         socket.emit("send_to_user", message.toJSONObject(), new Ack() {
             @Override
             public void call(Object... os) {
@@ -128,6 +137,9 @@ public class Model_File_Sender {
     
     public void startSend(int fileID) throws  IOException{
         this.fileID = fileID;
+        if(event != null){
+            event.onStartSending();
+        }
         sendingFile();
     }
     
@@ -150,9 +162,15 @@ public class Model_File_Sender {
                     if(act){
                         try {
                             if(!data.isFinish()){
+                                if (event != null) {
+                                    event.onSending(getPercentage());
+                                }
                                 sendingFile();
                             }else{  // file send fish
                                 Service.getInstance().fileSendFinish(Model_File_Sender.this);
+                                if (event != null) {
+                                    event.onFinish();
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -45,7 +45,7 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
     
         
     public void setImage(String... imageEncodingStrings){
-        txt.setImage(false, imageEncodingStrings);
+        //txt.setImage(false, imageEncodingStrings);
     }
     
     public void setTime(String time){
