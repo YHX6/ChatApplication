@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.model.Model_Receive_Image;
 import java.awt.Color;
 import javax.swing.Icon;
 
@@ -29,8 +30,8 @@ public class Chat_Left extends javax.swing.JLayeredPane {
         }    
     }
         
-    public void setImage(String... imageEncodingStrings){
-        txt.setImage(false, imageEncodingStrings);
+    public void setImage(Model_Receive_Image dataImage){
+        txt.setImage(false, dataImage);
     }
     
     public void setImage(Icon... images){

@@ -37,7 +37,7 @@ public class Chat_Right extends javax.swing.JLayeredPane {
     }
         
     public void setImage(String... imageEncodingStrings){
-        txt.setImage(false, imageEncodingStrings);
+        //txt.setImage(false, imageEncodingStrings);
     }
     
     public void setTime(String time){

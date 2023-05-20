@@ -5,7 +5,9 @@
 package com.healthconnect.component;
 
 import com.healthconnect.blueHash.BlurHash;
+import com.healthconnect.event.EventFileSender;
 import com.healthconnect.model.Model_File_Sender;
+import com.healthconnect.model.Model_Receive_Image;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -24,10 +26,10 @@ public class Image_Item extends javax.swing.JLayeredPane {
         initComponents();
     }
     
-    public void setImage(String imageEncodingString){
-        int width = 200;
-        int height = 200;
-        int[] data = BlurHash.decode(imageEncodingString, width, height, 1);
+    public void setImage(Model_Receive_Image dataImage){
+        int width = dataImage.getWidth();
+        int height = dataImage.getHeight();
+        int[] data = BlurHash.decode(dataImage.getImage(), width, height, 1);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         image.setRGB(0, 0, width, height, data, 0, width);
         Icon icon = new ImageIcon(image);
@@ -36,7 +38,22 @@ public class Image_Item extends javax.swing.JLayeredPane {
     
         
     public void setImage(Icon image, Model_File_Sender fileSender){
-        
+        fileSender.addEvent(new EventFileSender() {
+            @Override
+            public void onSending(double percentage) {
+                progress.setValue((int) percentage);
+            }
+
+            @Override
+            public void onStartSending() {
+                
+            }
+
+            @Override
+            public void onFinish() {
+                progress.setVisible(false);
+            }
+        });
         picBox.setImage(image);
     }
 
@@ -50,12 +67,12 @@ public class Image_Item extends javax.swing.JLayeredPane {
     private void initComponents() {
 
         picBox = new com.healthconnect.swing.PictureBox();
-        progress1 = new com.healthconnect.swing.Progress();
+        progress = new com.healthconnect.swing.Progress();
 
-        progress1.setForeground(new java.awt.Color(255, 255, 255));
-        progress1.setProgressType(com.healthconnect.swing.Progress.ProgressType.CANCEL);
+        progress.setForeground(new java.awt.Color(255, 255, 255));
+        progress.setProgressType(com.healthconnect.swing.Progress.ProgressType.CANCEL);
 
-        picBox.setLayer(progress1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        picBox.setLayer(progress, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout picBoxLayout = new javax.swing.GroupLayout(picBox);
         picBox.setLayout(picBoxLayout);
@@ -63,14 +80,14 @@ public class Image_Item extends javax.swing.JLayeredPane {
             picBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(picBoxLayout.createSequentialGroup()
                 .addContainerGap(57, Short.MAX_VALUE)
-                .addComponent(progress1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         picBoxLayout.setVerticalGroup(
             picBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(picBoxLayout.createSequentialGroup()
                 .addContainerGap(57, Short.MAX_VALUE)
-                .addComponent(progress1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
@@ -91,6 +108,6 @@ public class Image_Item extends javax.swing.JLayeredPane {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.healthconnect.swing.PictureBox picBox;
-    private com.healthconnect.swing.Progress progress1;
+    private com.healthconnect.swing.Progress progress;
     // End of variables declaration//GEN-END:variables
 }

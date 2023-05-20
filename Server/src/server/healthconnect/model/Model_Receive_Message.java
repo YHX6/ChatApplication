@@ -13,14 +13,16 @@ public class Model_Receive_Message {
     private int fromUserID;
     private String text;
     private int messageType;
+    private Model_Receive_Image dataImage;
 
     public Model_Receive_Message() {
     }
 
-    public Model_Receive_Message(int fromUserID, String text, int messageType) {
+    public Model_Receive_Message(int fromUserID, String text, int messageType, Model_Receive_Image dataImage) {
         this.fromUserID = fromUserID;
         this.text = text;
         this.messageType = messageType;
+        this.dataImage = dataImage;
     }
 
     public int getFromUserID() {
@@ -46,6 +48,16 @@ public class Model_Receive_Message {
     public void setMessageType(int messageType) {
         this.messageType = messageType;
     }
+
+    public Model_Receive_Image getDataImage() {
+        return dataImage;
+    }
+
+    public void setDataImage(Model_Receive_Image dataImage) {
+        this.dataImage = dataImage;
+    }
+
+   
 
     
     

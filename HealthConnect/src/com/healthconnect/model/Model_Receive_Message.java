@@ -16,6 +16,7 @@ public class Model_Receive_Message {
     private int fromUserID;
     private String text;
     private MessageType messageType;
+    private Model_Receive_Image dataImage;
 
     public Model_Receive_Message() {
     }
@@ -32,6 +33,9 @@ public class Model_Receive_Message {
             fromUserID = obj.getInt("fromUserID");
             text = obj.getString("text");      
             messageType = MessageType.toMessageType(obj.getInt("messageType"));
+            if(!obj.isNull("dataImage")){
+                dataImage = new Model_Receive_Image(obj.get("dataImage"));
+            }
         } catch (JSONException e) {
             System.err.println(e);
         }
@@ -43,6 +47,9 @@ public class Model_Receive_Message {
             obj.put("fromUserID", fromUserID);
             obj.put("text", text);
             obj.put("messageType", messageType.getValue());
+            if(dataImage != null){
+                obj.put("dataImage", dataImage.toJsonObject());
+            }
             return obj;
         } catch (JSONException e) {
             return null;
@@ -71,6 +78,14 @@ public class Model_Receive_Message {
 
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
+    }
+
+    public Model_Receive_Image getDataImage() {
+        return dataImage;
+    }
+
+    public void setDataImage(Model_Receive_Image dataImage) {
+        this.dataImage = dataImage;
     }
     
     
