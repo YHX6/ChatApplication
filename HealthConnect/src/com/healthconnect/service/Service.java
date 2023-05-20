@@ -4,7 +4,9 @@
  */
 package com.healthconnect.service;
 
+import com.healthconnect.event.EventFileReceiver;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_File_Receiver;
 import com.healthconnect.model.Model_File_Sender;
 import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_Send_Message;
@@ -30,6 +32,7 @@ public class Service {
     private final String IP = "localhost";
     private Model_User_Account user;
     private List<Model_File_Sender> fileSenders;
+    private List<Model_File_Receiver> fileReceivers;
     
     public static Service getInstance(){
         if(instance == null) instance = new Service();
@@ -38,6 +41,7 @@ public class Service {
     
     public Service( ){
         fileSenders = new ArrayList<>();
+        fileReceivers = new ArrayList<>();
     }
 
     public Socket getClient() {
@@ -117,4 +121,18 @@ public class Service {
         }
     }
     
+    public void fileReceiverFinish(Model_File_Receiver data) throws IOException{
+        fileReceivers.remove(data);
+        if(!fileReceivers.isEmpty()){
+            fileReceivers.get(0).initReceive();
+        }
+    }
+    
+    public void addFileReceiver(int fileID, EventFileReceiver event) throws IOException{
+        Model_File_Receiver data = new Model_File_Receiver(fileID, client, event);
+        fileReceivers.add(data);
+        if(fileReceivers.size()== 1){
+            data.initReceive();
+        }
+    }
 }

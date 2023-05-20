@@ -25,6 +25,7 @@ import server.healthconnect.model.Model_Package_Sender;
 import server.healthconnect.model.Model_Receive_Image;
 import server.healthconnect.model.Model_Receive_Message;
 import server.healthconnect.model.Model_Register;
+import server.healthconnect.model.Model_Reques_Files;
 import server.healthconnect.model.Model_Send_Message;
 import server.healthconnect.model.Model_User_Account;
 
@@ -154,7 +155,30 @@ public class Service {
             }
 
         });
-
+        
+        server.addEventListener("get_file", Integer.class, new DataListener<Integer>(){
+            @Override
+            public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {
+                Model_File file = serviceFile.initFile(t);
+                long fileSize = serviceFile.getFileSize(t);
+                ar.sendAckData(file.getFileExtension(), fileSize);
+            }
+            
+        });
+        
+        server.addEventListener("reques_file", Model_Reques_Files.class, new DataListener<Model_Reques_Files>(){
+            @Override
+            public void onData(SocketIOClient sioc, Model_Reques_Files t, AckRequest ar) throws Exception {
+                byte[] data = serviceFile.getFileData(t.getCurrentLength(), t.getFileID());
+                if(data != null){
+                    ar.sendAckData(data);
+                }else{
+                    ar.sendAckData();
+                }
+            }
+            
+        });
+        
         server.start();
         textArea.setText("Server start on port: " + PORT_NUMBER + "\n");
     }
