@@ -5,10 +5,14 @@
 package com.healthconnect.component;
 
 import com.healthconnect.blueHash.BlurHash;
+import com.healthconnect.event.EventFileReceiver;
 import com.healthconnect.event.EventFileSender;
 import com.healthconnect.model.Model_File_Sender;
 import com.healthconnect.model.Model_Receive_Image;
+import com.healthconnect.service.Service;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -34,6 +38,28 @@ public class Image_Item extends javax.swing.JLayeredPane {
         image.setRGB(0, 0, width, height, data, 0, width);
         Icon icon = new ImageIcon(image);
         picBox.setImage(icon);
+        try {
+            Service.getInstance().addFileReceiver(dataImage.getFileID(), new EventFileReceiver() {
+                @Override
+                public void onReceiving(double percentage) {
+                    progress.setValue((int) percentage);
+                }
+
+                @Override
+                public void onStartReceiving() {
+                    
+                }
+
+                @Override
+                public void onFinish(File file) {
+                    progress.setVisible(false);
+                    picBox.setImage(new ImageIcon(file.getAbsolutePath()));
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
     
         

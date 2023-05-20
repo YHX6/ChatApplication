@@ -6,8 +6,7 @@ package server.healthconnect.service;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +22,7 @@ import server.healthconnect.blueHash.BlurHash;
 import server.healthconnect.connection.DatabaseConnection;
 import server.healthconnect.model.Model_File;
 import server.healthconnect.model.Model_File_Receiver;
+import server.healthconnect.model.Model_File_Sender;
 import server.healthconnect.model.Model_Package_Sender;
 import server.healthconnect.model.Model_Receive_Image;
 import server.healthconnect.model.Model_Send_Message;
@@ -36,6 +36,7 @@ public class ServiceFile {
     public ServiceFile(){
         this.con = DatabaseConnection.getInstance().getConnection();
         fileReceivers = new HashMap<>();
+        fileSenders = new HashMap<>();
     }
     
     
@@ -131,17 +132,50 @@ public class ServiceFile {
         return new File(PATH_FILE + file.getFileID() + file.getFileExtension());
     }
     
+    public Model_File getFile(int fileID) throws SQLException{
+        PreparedStatement p = con.prepareStatement(GET_FILE_EXTENSION);
+        p.setInt(1, fileID);
+        ResultSet r = p.executeQuery();
+        r.next();
+        String fileExtension = r.getString(1);
+        Model_File data = new Model_File(fileID, fileExtension);
+        r.close();
+        p.close();
+        return data;
+    }
+    
+    public synchronized Model_File initFile(int fileID) throws IOException, SQLException{
+        Model_File file;
+        if(!fileSenders.containsKey(fileID)){
+            file = getFile(fileID);
+            fileSenders.put(fileID, new Model_File_Sender(file, new File(PATH_FILE + fileID + file.getFileExtension())));
+            
+        }else{
+            file = fileSenders.get(fileID).getData();
+        }
+        return file;
+    }
+    
+    public byte [] getFileData(long currentLength, int fileID) throws IOException, SQLException{
+        initFile(fileID);
+        return fileSenders.get(fileID).read(currentLength);
+    }
+    
+    public long getFileSize(int fileID){
+        return fileSenders.get(fileID).getFileSize();
+    }
+    
     //sql
     private final String PATH_FILE = "server_data/";
     private final String INSERT = "insert into files (FileExtension) values (?)";
     private final String UPDATE_BLUR_HASH_DONE = "update files set BlurHash=?, `Status` = '1' where FileID=? limit 1";
     private final String UPDATE_DONE = "update files set `Status`='1' where FileID=? limit 1";
-    
+    private final String GET_FILE_EXTENSION = "select FileExtension from files where FileID=? limit 1";
     
     //instance
     private final Connection con;
     private final Map<Integer, Model_File_Receiver> fileReceivers;
-    
+    private final Map<Integer, Model_File_Sender> fileSenders;
     
     
 }
