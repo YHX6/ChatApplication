@@ -4,8 +4,6 @@
  */
 package com.healthconnect.swing;
 
-import com.sun.xml.internal.ws.api.Cancelable;
-import javax.swing.Icon;
 import javax.swing.JProgressBar;
 
 /**
