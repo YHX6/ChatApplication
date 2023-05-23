@@ -6,6 +6,7 @@ package com.healthconnect.event;
 
 import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_Send_Message;
+import com.healthconnect.model.Model_User_Account;
 
 
 /**
@@ -16,5 +17,7 @@ public interface EventChat {
     public void sendMessage(Model_Send_Message data);
     
     public void receiveMessage(Model_Receive_Message data);
+    
+
     
 }

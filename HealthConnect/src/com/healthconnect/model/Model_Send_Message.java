@@ -5,6 +5,8 @@
 package com.healthconnect.model;
 
 import com.healthconnect.app.MessageType;
+import com.healthconnect.util.Util;
+import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ public class Model_Send_Message {
     private String text;
     private MessageType messageType;
     private Model_File_Sender file;
+    private String time;
 
     public Model_Send_Message(int fromUserID, int toUserID, String text, MessageType messageType) {
         this.fromUserID = fromUserID;
@@ -25,6 +28,25 @@ public class Model_Send_Message {
         this.text = text;
         this.messageType = messageType;
     }
+
+    public Model_Send_Message(int fromUserID, int toUserID, String text, MessageType messageType, String time) {
+        this.fromUserID = fromUserID;
+        this.toUserID = toUserID;
+        this.text = text;
+        this.messageType = messageType;
+        this.file = file;
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+    
+    
 
     public Model_Send_Message() {
     }
@@ -83,6 +105,7 @@ public class Model_Send_Message {
             }else{
                 obj.put("text", text);
             }
+            obj.put("time", time);
             return obj;
         } catch (JSONException e) {
             return null;

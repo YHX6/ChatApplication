@@ -11,6 +11,7 @@ import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.JIMSendTextPane;
 import com.healthconnect.swing.ScrollBar;
+import com.healthconnect.util.Util;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -130,7 +132,7 @@ public class ChatBottom extends javax.swing.JPanel {
     private void eventSend(JIMSendTextPane txt){            
         String text = txt.getText().trim();       
         if(!txt.equals("")){
-            Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), text, MessageType.TEXT);                      
+            Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), text, MessageType.TEXT, Util.toDateStr(new Date()));                      
             send(message);                      // send to server     
             PublicEvent.getInstance().getEventChat().sendMessage(message);     // add to text pane     
             txt.setText("");     

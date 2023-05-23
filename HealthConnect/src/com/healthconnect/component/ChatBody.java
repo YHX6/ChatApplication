@@ -8,6 +8,7 @@ import com.healthconnect.app.MessageType;
 import com.healthconnect.emoji.Emoji;
 import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_Send_Message;
+import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.swing.ScrollBar;
 import java.awt.Adjustable;
 import java.awt.Color;
@@ -28,6 +29,7 @@ public class ChatBody extends javax.swing.JPanel {
     /**
      * Creates new form ChatTitle
      */
+    private Model_User_Account user;
     public ChatBody() {
         initComponents();
         init();
@@ -38,7 +40,18 @@ public class ChatBody extends javax.swing.JPanel {
         sp.setVerticalScrollBar(new ScrollBar());
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
+
+    public Model_User_Account getUser() {
+        return user;
+    }
+
+    public void setUser(Model_User_Account user) {
+        this.user = user;
+    }
     
+    public void initHistory(){
+        
+    }
     
     public void clearChat(){
         body.removeAll();

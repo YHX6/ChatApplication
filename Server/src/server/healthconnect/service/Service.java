@@ -42,6 +42,7 @@ public class Service {
     private ServiceUser serviceUser;
     private List<Model_Client> listClients;
     private ServiceFile serviceFile;
+    private ServiceMessage serviceMessage;
 
     public static Service getInstance(JTextArea textArea) {
         if (instance == null) {
@@ -55,6 +56,7 @@ public class Service {
         serviceUser = new ServiceUser();
         listClients = new ArrayList<>();
         serviceFile = new ServiceFile();
+        serviceMessage = new ServiceMessage();
 
     }
 
@@ -98,7 +100,7 @@ public class Service {
                 }
             }
         });
-        //
+        //user login
         server.addEventListener("login", Model_Login.class, new DataListener<Model_Login>() {
             @Override
             public void onData(SocketIOClient sioc, Model_Login t, AckRequest ar) throws Exception {
@@ -124,6 +126,7 @@ public class Service {
             }
         });
 
+        // send message to user side
         server.addEventListener("send_to_user", Model_Send_Message.class, new DataListener<Model_Send_Message>() {
             @Override
             public void onData(SocketIOClient sioc, Model_Send_Message t, AckRequest ar) throws Exception {
@@ -132,6 +135,7 @@ public class Service {
 
         });
 
+         // send file to user side
         server.addEventListener("send_file", Model_Package_Sender.class, new DataListener<Model_Package_Sender>() {
             @Override
             public void onData(SocketIOClient sioc, Model_Package_Sender t, AckRequest ar) throws Exception {
@@ -156,6 +160,7 @@ public class Service {
 
         });
         
+         // get file to user side
         server.addEventListener("get_file", Integer.class, new DataListener<Integer>(){
             @Override
             public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {
@@ -166,6 +171,7 @@ public class Service {
             
         });
         
+        // get a list of files from user
         server.addEventListener("reques_file", Model_Reques_Files.class, new DataListener<Model_Reques_Files>(){
             @Override
             public void onData(SocketIOClient sioc, Model_Reques_Files t, AckRequest ar) throws Exception {
@@ -220,9 +226,18 @@ public class Service {
             }
 
         } else {
+            //1. persit in the database
+            Model_Receive_Message message = new Model_Receive_Message(data.getFromUserID(), data.getText(), data.getMessageType(), null, data.getTime());
+            try {
+                serviceMessage.PersistMessage(data);
+            } catch (SQLException e) {
+            }
+            
+            
+            // 2.send to correpsonding people
             for (Model_Client c : listClients) {
                 if (c.getUser().getUserID() == data.getToUserID()) {
-                    c.getClient().sendEvent("receive_ms", new Model_Receive_Message(data.getFromUserID(), data.getText(), data.getMessageType(), null));
+                    c.getClient().sendEvent("receive_ms", message);
                     break;
                 }
             }

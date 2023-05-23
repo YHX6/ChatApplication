@@ -4,6 +4,10 @@
  */
 package server.healthconnect.model;
 
+import java.util.Date;
+
+
+
 
 /**
  *
@@ -14,6 +18,7 @@ public class Model_Receive_Message {
     private String text;
     private int messageType;
     private Model_Receive_Image dataImage;
+    private String time;
 
     public Model_Receive_Message() {
     }
@@ -24,6 +29,25 @@ public class Model_Receive_Message {
         this.messageType = messageType;
         this.dataImage = dataImage;
     }
+
+    public Model_Receive_Message(int fromUserID, String text, int messageType, Model_Receive_Image dataImage, String time) {
+        this.fromUserID = fromUserID;
+        this.text = text;
+        this.messageType = messageType;
+        this.dataImage = dataImage;
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+    
+    
+    
 
     public int getFromUserID() {
         return fromUserID;
