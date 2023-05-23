@@ -1,1 +1,2 @@
 # ChatApplication
+Prototype of chatapplication
