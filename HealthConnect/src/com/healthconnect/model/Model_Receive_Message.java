@@ -5,6 +5,8 @@
 package com.healthconnect.model;
 
 import com.healthconnect.app.MessageType;
+import com.healthconnect.util.Util;
+import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +19,7 @@ public class Model_Receive_Message {
     private String text;
     private MessageType messageType;
     private Model_Receive_Image dataImage;
+    private String time;
 
     public Model_Receive_Message() {
     }
@@ -26,6 +29,16 @@ public class Model_Receive_Message {
         this.text = text;
         this.messageType = messageType;
     }
+
+    public Model_Receive_Message(int fromUserID, String text, MessageType messageType, Model_Receive_Image dataImage, String time) {
+        this.fromUserID = fromUserID;
+        this.text = text;
+        this.messageType = messageType;
+        this.dataImage = dataImage;
+        this.time = time;
+    }
+    
+    
     
     public Model_Receive_Message(Object json) {
         JSONObject obj = (JSONObject) json;
@@ -36,6 +49,7 @@ public class Model_Receive_Message {
             if(!obj.isNull("dataImage")){
                 dataImage = new Model_Receive_Image(obj.get("dataImage"));
             }
+            time = obj.getString("time");
         } catch (JSONException e) {
             System.err.println(e);
         }
@@ -50,6 +64,7 @@ public class Model_Receive_Message {
             if(dataImage != null){
                 obj.put("dataImage", dataImage.toJsonObject());
             }
+            obj.put("time", time);    
             return obj;
         } catch (JSONException e) {
             return null;
@@ -87,7 +102,13 @@ public class Model_Receive_Message {
     public void setDataImage(Model_Receive_Image dataImage) {
         this.dataImage = dataImage;
     }
-    
-    
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
     
 }

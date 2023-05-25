@@ -52,6 +52,9 @@ public class Chat extends javax.swing.JPanel {
                     chatBody.addItemLeft(data);
                 }
             }
+
+            
+            
         });
         
         add(chatTitle, "wrap");
@@ -63,12 +66,18 @@ public class Chat extends javax.swing.JPanel {
     public void setUser(Model_User_Account user){
         chatTitle.setUserName(user);
         chatBottom.setUser(user);
-        chatBody.clearChat();
+        chatBody.setUser(user);
+        //chatBody.clearChat();
+        chatBody.initHistory();
     }
     
     public void updateUser(Model_User_Account user){
          chatTitle.updateUser(user);
         chatBottom.setUser(user);
+    }
+    
+    public void initHistory(){
+        
     }
     
     /**

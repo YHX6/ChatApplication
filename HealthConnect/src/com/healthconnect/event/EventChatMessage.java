@@ -4,16 +4,16 @@
  */
 package com.healthconnect.event;
 
-import com.healthconnect.model.Model_Message;
+import com.healthconnect.model.Model_Direction;
+
 
 /**
  *
  * @author xyh10
  */
-public interface EventMessage {
+public interface EventChatMessage {
     
-    public void callMessage(Model_Message message);
+    public void sendChatMessages(Model_Direction direction);
+    //public void sendChatMessages(Integer a);
     
-    
-     
 }

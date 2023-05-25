@@ -29,3 +29,11 @@ create table files (
     Status char(1) not null default '0',
     primary key (FileID)
 );
+
+create table messages(
+	FromUserID int not null,
+    ToUserID int not null,
+    MessageType int,
+    Content varchar(1000),
+    Time varchar(150)
+);

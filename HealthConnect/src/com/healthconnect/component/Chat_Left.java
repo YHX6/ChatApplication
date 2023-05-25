@@ -39,7 +39,7 @@ public class Chat_Left extends javax.swing.JLayeredPane {
     }
     
     public void setTime(String time){
-        txt.setTime("10:30 AM");
+        txt.setTime(time);
     }
     public void setFile(String filename, String filesize){
         txt.setFile(filename, filesize);

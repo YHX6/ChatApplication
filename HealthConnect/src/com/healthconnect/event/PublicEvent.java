@@ -16,6 +16,8 @@ public class PublicEvent {
     private EventLogin login;
     private EventMain em;
     private EventMenuLeft eml;
+    private EventChatMessage ecm;
+    private EventInitChatMessage eventInitChatMessage;
     
     public static PublicEvent getInstance(){
         if(instance == null){
@@ -26,6 +28,22 @@ public class PublicEvent {
     
     private PublicEvent(){
         
+    }
+
+    public EventInitChatMessage getEventInitChatMessage() {
+        return eventInitChatMessage;
+    }
+
+    public void addEventInitChatMessage(EventInitChatMessage eventInitChatMessage) {
+        this.eventInitChatMessage = eventInitChatMessage;
+    }
+
+    public EventChatMessage getEventChatMessage() {
+        return ecm;
+    }
+
+    public void addEventChatMessage(EventChatMessage ecm) {
+        this.ecm = ecm;
     }
     
     

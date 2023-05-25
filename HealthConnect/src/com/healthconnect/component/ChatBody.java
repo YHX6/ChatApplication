@@ -6,18 +6,27 @@ package com.healthconnect.component;
 
 import com.healthconnect.app.MessageType;
 import com.healthconnect.emoji.Emoji;
+import com.healthconnect.event.EventInitChatMessage;
+import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_Receive_Message;
 import com.healthconnect.model.Model_Send_Message;
+import com.healthconnect.model.Model_User_Account;
+import com.healthconnect.service.Service;
+
 import com.healthconnect.swing.ScrollBar;
+import com.healthconnect.util.Util;
 import java.awt.Adjustable;
 import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
+import sun.security.util.Password;
 
 /**
  *
@@ -28,6 +37,7 @@ public class ChatBody extends javax.swing.JPanel {
     /**
      * Creates new form ChatTitle
      */
+    private Model_User_Account user;
     public ChatBody() {
         initComponents();
         init();
@@ -37,8 +47,50 @@ public class ChatBody extends javax.swing.JPanel {
         body.setLayout(new MigLayout("fillx", "", "15[]15"));
         sp.setVerticalScrollBar(new ScrollBar());
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
+        
+        PublicEvent.getInstance().addEventInitChatMessage(new EventInitChatMessage(){
+            @Override
+            public void initChatMessages(List<Model_Send_Message> messages) {
+                Collections.sort(messages, (a,b) -> (a.getTime().compareTo(b.getTime())));
+                clearChat();
+                
+                int thisID = Service.getInstance().getUser().getUserID();
+                
+                String dateSoFar = null;
+                for(Model_Send_Message m:messages){
+                    String dateThis = m.getTime().substring(0, 10);
+                    //System.out.println(dateSoFar);
+                    if(dateSoFar == null || !dateThis.equals(dateSoFar)){
+                        dateSoFar = dateThis;
+                        addDate(dateSoFar);
+                    }
+                    
+                    if(m.getFromUserID() == thisID){
+                        addItemRight(m);
+                    }else{
+                        addItemLeft(m);
+                    }
+                }
+            }
+            
+        });
+        
+        
+        
+    }
+
+    public Model_User_Account getUser() {
+        return user;
+    }
+
+    public void setUser(Model_User_Account user) {
+        this.user = user; 
     }
     
+    public void initHistory(){
+        body.removeAll();
+        
+    }
     
     public void clearChat(){
         body.removeAll();
@@ -46,31 +98,51 @@ public class ChatBody extends javax.swing.JPanel {
         revalidate();
     }
     
+
     public void addItemLeft(String text, String user, Icon... images){
         Chat_Left_Profile item = new Chat_Left_Profile();
         item.setText(text);
         item.setImage(images);
-        item.setTime("asd");
+        item.setTime(Util.toDateStr(new Date()));
         item.setUserProfile(user);
         body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
         body.revalidate();
     }
     
+        public void addItemLeft(Model_Send_Message data){
+        if(data.getMessageType() == MessageType.TEXT){
+            Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setText(data.getText());
+            item.setTime(data.getTime());
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        }else if(data.getMessageType() == MessageType.EMOJI){
+            Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
+            item.setTime(data.getTime());
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
+        }else if(data.getMessageType() == MessageType.IMAGE){
+           // toD
+        }
+        
+        repaint();
+        revalidate();
+    }
+    
         
     public void addItemLeft(Model_Receive_Message data){
         if(data.getMessageType() == MessageType.TEXT){
-            Chat_Left item = new Chat_Left();
+            Chat_Left_Profile item = new Chat_Left_Profile();
             item.setText(data.getText());
             item.setTime("asd");
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.EMOJI){
-            Chat_Left item = new Chat_Left();
+            Chat_Left_Profile item = new Chat_Left_Profile();
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
             item.setTime("asd");
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.IMAGE){
-            Chat_Left item = new Chat_Left();
+            Chat_Left_Profile item = new Chat_Left_Profile();
             item.setText("");
             item.setImage(data.getDataImage());
             item.setTime("asd");
@@ -85,7 +157,7 @@ public class ChatBody extends javax.swing.JPanel {
         Chat_Left_Profile item = new Chat_Left_Profile();
         item.setText(text);
         item.setFile(filename, filesize);
-        item.setTime("asd");
+        item.setTime(Util.toDateStr(new Date()));
         item.setUserProfile(user);
         body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         body.repaint();
@@ -107,20 +179,20 @@ public class ChatBody extends javax.swing.JPanel {
         if(data.getMessageType() == MessageType.TEXT){
             Chat_Right item = new Chat_Right();
             item.setText(data.getText()); 
-            item.setTime("sd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
            
         }else if(data.getMessageType() == MessageType.EMOJI){
             Chat_Right item = new Chat_Right();
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            item.setTime("sd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
             
         }else if(data.getMessageType() == MessageType.IMAGE){
             Chat_Right item = new Chat_Right();
             item.setText("");
             item.setImage(data.getFile());
-            item.setTime("sd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
             
         }

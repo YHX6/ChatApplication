@@ -5,7 +5,9 @@
 package com.healthconnect.component;
 
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Direction;
 import com.healthconnect.model.Model_User_Account;
+import com.healthconnect.service.Service;
 import com.healthconnect.swing.ActiveStatus;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -63,6 +65,8 @@ public class Item_People extends javax.swing.JPanel {
             public void mouseReleased(MouseEvent me){
                 if(mouseOver){
                     PublicEvent.getInstance().getEventMain().selectUser(user);
+                    PublicEvent.getInstance().getEventChatMessage().sendChatMessages(new Model_Direction(Service.getInstance().getUser().getUserID()    , user.getUserID()));
+                    
                 }
             }
             

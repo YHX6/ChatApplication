@@ -5,14 +5,20 @@
 package com.healthconnect.main;
 
 import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
+import com.healthconnect.event.EventChatMessage;
 import com.healthconnect.event.EventImageView;
 import com.healthconnect.event.EventMain;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_Direction;
+import com.healthconnect.model.Model_Send_Message;
 import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.ComponentResizer;
+import io.socket.client.Ack;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -58,7 +64,7 @@ public class Main extends javax.swing.JFrame {
             
             @Override
             public void saveImage(Icon image){
-                System.out.println("hutao");
+                //System.out.println("hutao");
             }
         });
         
@@ -74,6 +80,7 @@ public class Main extends javax.swing.JFrame {
                 home.setVisible(true);
                 login.setVisible(false);
                 Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());  // send id for this client to server and revives all chats users
+                //System.out.println("triger list_user");
             }
 
             @Override
@@ -85,8 +92,31 @@ public class Main extends javax.swing.JFrame {
             public void updateUser(Model_User_Account user) {
               home.updateUser(user);
             }
-            
-            
+        });
+        
+//        PublicEvent.getInstance().addEventChatMessage(new EventChatMessage(){
+//            @Override
+//            public void sendChatMessages(Model_Direction a) {
+//                Service.getInstance().getClient().emit("chat_history", a.toJsonObject(), new Ack(){
+//                    @Override
+//                    public void call(Object... os) {
+//                        List<Model_Send_Message> messages = new ArrayList<>();
+//                        for(Object o:os){
+//                            messages.add((Model_Send_Message) o);
+//                            System.out.println(o.toString());
+//                        }
+//                        System.out.println(messages.toString());
+//                    }
+//                    
+//                });
+//                //System.out.println("sent");
+//            } 
+//        });
+        PublicEvent.getInstance().addEventChatMessage(new EventChatMessage(){
+            @Override
+            public void sendChatMessages(Model_Direction direction) {
+                Service.getInstance().getClient().emit("chat_history", direction.toJsonObject());
+            }
             
         });
         

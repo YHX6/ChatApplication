@@ -8,7 +8,6 @@ import com.healthconnect.event.EventMessage;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_Message;
 import com.healthconnect.model.Model_Register;
-import javax.swing.Timer;
 
 /**
  *
@@ -195,8 +194,16 @@ public class P_Register extends javax.swing.JPanel {
                             Thread.sleep(1000);
                         } catch (Exception e) {
                         }
+                        // show loading
+                        PublicEvent.getInstance().getEventMain().showLoading(true);
+                        try {
+                            Thread.sleep(2000);
+                        } catch (Exception e) {
+
+                        }
+                        PublicEvent.getInstance().getEventMain().showLoading(false);
                         PublicEvent.getInstance().getEventMain().initChat();
-//                        PublicEvent.getInstance().getEventLogin().login();
+                        //PublicEvent.getInstance().getEventLogin().login();
                     }
                 }
             });

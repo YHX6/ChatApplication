@@ -5,6 +5,8 @@
 package com.healthconnect.model;
 
 import com.healthconnect.app.MessageType;
+import com.healthconnect.util.Util;
+import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ public class Model_Send_Message {
     private String text;
     private MessageType messageType;
     private Model_File_Sender file;
+    private String time;
 
     public Model_Send_Message(int fromUserID, int toUserID, String text, MessageType messageType) {
         this.fromUserID = fromUserID;
@@ -25,6 +28,47 @@ public class Model_Send_Message {
         this.text = text;
         this.messageType = messageType;
     }
+
+    public Model_Send_Message(int fromUserID, int toUserID, String text, MessageType messageType, String time) {
+        this.fromUserID = fromUserID;
+        this.toUserID = toUserID;
+        this.text = text;
+        this.messageType = messageType;
+        this.time = time;
+    }
+    
+    public Model_Send_Message(Object json) {
+        JSONObject obj = (JSONObject) json;
+        //System.out.println(json.toString());
+        try {
+            fromUserID = obj.getInt("fromUserID");
+            toUserID = obj.getInt("toUserID");
+            text = obj.getString("text");
+            int type = obj.getInt("messageType");
+            if(type == 1){
+                messageType = MessageType.TEXT;
+            }else if(type == 2){
+                messageType = MessageType.EMOJI;
+            }else if(type == 3){
+                messageType = MessageType.FILE;
+            }else{
+                messageType = MessageType.IMAGE;
+            }
+            time = obj.getString("time");
+        } catch (JSONException e) {
+            System.err.println(e);
+        }
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+    
+    
 
     public Model_Send_Message() {
     }
@@ -83,10 +127,18 @@ public class Model_Send_Message {
             }else{
                 obj.put("text", text);
             }
+            obj.put("time", time);
             return obj;
         } catch (JSONException e) {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Model_Send_Message{" + "fromUserID=" + fromUserID + ", toUserID=" + toUserID + ", text=" + text + ", messageType=" + messageType + ", file=" + file + ", time=" + time + '}';
+    }
+    
+    
     
 }
