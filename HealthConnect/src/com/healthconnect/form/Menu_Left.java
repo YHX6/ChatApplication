@@ -96,7 +96,8 @@ public class Menu_Left extends javax.swing.JPanel {
         //test data
         menuList.removeAll();
         for(Model_User_Account user:userAccounts){
-            menuList.add(new Item_People(null), "wrap");
+            //menuList.add(new Item_People(null), "wrap");
+            menuList.add(new Item_People(user), "wrap");
         }
         refreshMenuList();
     }

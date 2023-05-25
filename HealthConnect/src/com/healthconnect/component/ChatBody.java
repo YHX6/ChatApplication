@@ -58,18 +58,28 @@ public class ChatBody extends javax.swing.JPanel {
                 
                 String dateSoFar = null;
                 for(Model_Send_Message m:messages){
+                    // add time bar
                     String dateThis = m.getTime().substring(0, 10);
-                    //System.out.println(dateSoFar);
                     if(dateSoFar == null || !dateThis.equals(dateSoFar)){
                         dateSoFar = dateThis;
                         addDate(dateSoFar);
                     }
+                    // add message
+//                    if(m.getMessageType() == MessageType.TEXT){
+                        if (m.getFromUserID() == thisID) {
+                            addItemRight(m);
+                        } else {
+                            addItemLeft(m);
+                        }
+//                    }else if(m.getMessageType() == MessageType.EMOJI){
+//                        if (m.getFromUserID() == thisID) {
+//                            addItemRight(m);
+//                        } else {
+//                            addItemLeft(m);
+//                        }
+//                    }
                     
-                    if(m.getFromUserID() == thisID){
-                        addItemRight(m);
-                    }else{
-                        addItemLeft(m);
-                    }
+                    
                 }
             }
             
@@ -101,6 +111,7 @@ public class ChatBody extends javax.swing.JPanel {
 
     public void addItemLeft(String text, String user, Icon... images){
         Chat_Left_Profile item = new Chat_Left_Profile();
+        item.setProfile(this.user.getImage());
         item.setText(text);
         item.setImage(images);
         item.setTime(Util.toDateStr(new Date()));
@@ -110,16 +121,18 @@ public class ChatBody extends javax.swing.JPanel {
         body.revalidate();
     }
     
-        public void addItemLeft(Model_Send_Message data){
+    public void addItemLeft(Model_Send_Message data){
         if(data.getMessageType() == MessageType.TEXT){
             Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
             item.setText(data.getText());
             item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.EMOJI){
             Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            item.setTime(data.getTime());
+            //item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.IMAGE){
            // toD
@@ -133,19 +146,22 @@ public class ChatBody extends javax.swing.JPanel {
     public void addItemLeft(Model_Receive_Message data){
         if(data.getMessageType() == MessageType.TEXT){
             Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
             item.setText(data.getText());
-            item.setTime("asd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.EMOJI){
             Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            item.setTime("asd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.IMAGE){
             Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
             item.setText("");
             item.setImage(data.getDataImage());
-            item.setTime("asd");
+            item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }
         
@@ -155,6 +171,7 @@ public class ChatBody extends javax.swing.JPanel {
     
     public void addItemFile(String text, String user, String filename, String filesize){
         Chat_Left_Profile item = new Chat_Left_Profile();
+        item.setProfile(this.user.getImage());
         item.setText(text);
         item.setFile(filename, filesize);
         item.setTime(Util.toDateStr(new Date()));
@@ -165,7 +182,8 @@ public class ChatBody extends javax.swing.JPanel {
     }
         
     public void addItemFileRight(String text, String filename, String filesize){
-        Chat_Right item = new Chat_Right();
+        Chat_Right_Profile item = new Chat_Right_Profile();
+        item.setProfile(Service.getInstance().getUser().getImage());
         item.setText(text);
         item.setFile(filename, filesize);
         
@@ -177,19 +195,22 @@ public class ChatBody extends javax.swing.JPanel {
         
     public void addItemRight(Model_Send_Message data){
         if(data.getMessageType() == MessageType.TEXT){
-            Chat_Right item = new Chat_Right();
+            Chat_Right_Profile item = new Chat_Right_Profile();
+            item.setProfile(Service.getInstance().getUser().getImage());
             item.setText(data.getText()); 
             item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
            
         }else if(data.getMessageType() == MessageType.EMOJI){
-            Chat_Right item = new Chat_Right();
+            Chat_Right_Profile item = new Chat_Right_Profile();
+            item.setProfile(Service.getInstance().getUser().getImage());
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            item.setTime(data.getTime());
+            //item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
             
         }else if(data.getMessageType() == MessageType.IMAGE){
-            Chat_Right item = new Chat_Right();
+            Chat_Right_Profile item = new Chat_Right_Profile();
+            item.setProfile(Service.getInstance().getUser().getImage());
             item.setText("");
             item.setImage(data.getFile());
             item.setTime(data.getTime());

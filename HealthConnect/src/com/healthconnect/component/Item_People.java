@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.emoji.Emoji;
 import com.healthconnect.event.PublicEvent;
 import com.healthconnect.model.Model_Direction;
 import com.healthconnect.model.Model_User_Account;
@@ -12,6 +13,7 @@ import com.healthconnect.swing.ActiveStatus;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -30,6 +32,9 @@ public class Item_People extends javax.swing.JPanel {
         initComponents();
         lb.setText(user.getUserName());
         activeStatus.setActive(user.isStatus());
+        //System.out.println(user.getUserName() + "   " + user.getImage());
+        profile.setImage(new ImageIcon("client_data/" + user.getImage()));
+       
         init();
         
     }
@@ -85,15 +90,15 @@ public class Item_People extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        imageAvatar1 = new com.healthconnect.swing.ImageAvatar();
+        profile = new com.healthconnect.swing.ImageAvatar();
         lb = new javax.swing.JLabel();
         lb1 = new javax.swing.JLabel();
         activeStatus = new com.healthconnect.swing.ActiveStatus();
 
         setBackground(new java.awt.Color(242, 242, 242));
 
-        imageAvatar1.setBorderSize(0);
-        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/com/healthconnect/icon/user-active.png"))); // NOI18N
+        profile.setBorderSize(0);
+        profile.setImage(new javax.swing.ImageIcon(getClass().getResource("/com/healthconnect/icon/user-active.png"))); // NOI18N
 
         lb.setFont(new java.awt.Font("Microsoft YaHei UI", 2, 12)); // NOI18N
         lb.setForeground(new java.awt.Color(159, 159, 159));
@@ -108,7 +113,7 @@ public class Item_People extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(2, 2, 2)
-                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
@@ -124,7 +129,7 @@ public class Item_People extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(imageAvatar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lb1)
                         .addGap(0, 0, 0)
@@ -138,8 +143,8 @@ public class Item_People extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.healthconnect.swing.ActiveStatus activeStatus;
-    private com.healthconnect.swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel lb;
     private javax.swing.JLabel lb1;
+    private com.healthconnect.swing.ImageAvatar profile;
     // End of variables declaration//GEN-END:variables
 }

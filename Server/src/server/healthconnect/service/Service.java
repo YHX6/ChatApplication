@@ -109,13 +109,10 @@ public class Service {
         server.addEventListener("chat_history", Model_Direction.class, new DataListener<Model_Direction>(){
             @Override
             public void onData(SocketIOClient sioc, Model_Direction t, AckRequest ar) throws Exception {
-                System.out.println(t.toString());
+                
                 try {
                     List<Model_Send_Message> messages = serviceChatMessage.getMessages(t);
-                    System.out.println(messages.toString());
                     sioc.sendEvent("chat_history", messages.toArray());
-                    //ar.sendAckData( messages.toArray());
-                    //server.getBroadcastOperations().sendEvent("chat_history", messages.toArray());
                 } catch (Exception e) {
                     System.err.println(e);
                 }
