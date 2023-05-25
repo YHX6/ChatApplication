@@ -79,6 +79,22 @@ public class Service {
                     
                 }
             });
+            
+            client.on("chat_history", new Emitter.Listener() {
+                @Override
+                public void call(Object... os) {
+                    // list user
+                    List<Model_Send_Message> messages = new ArrayList<>();
+                    for (Object o : os) {
+                        Model_Send_Message m = new Model_Send_Message(o);
+                        messages.add(m);
+                        //System.out.println(m.toString());
+                    }
+                    //PublicEvent.getInstance().getEventMenuLeft().newUser(users);
+                    PublicEvent.getInstance().getEventInitChatMessage().initChatMessages(messages);
+                }
+            });
+            
             client.on("receive_ms", new Emitter.Listener(){
                 @Override
                 public void call(Object... os){
@@ -91,6 +107,8 @@ public class Service {
             error(e);
         }
     }
+    
+
     
     private void error(Exception e){
         System.err.println(e);

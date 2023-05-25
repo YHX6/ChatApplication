@@ -34,8 +34,30 @@ public class Model_Send_Message {
         this.toUserID = toUserID;
         this.text = text;
         this.messageType = messageType;
-        this.file = file;
         this.time = time;
+    }
+    
+    public Model_Send_Message(Object json) {
+        JSONObject obj = (JSONObject) json;
+        //System.out.println(json.toString());
+        try {
+            fromUserID = obj.getInt("fromUserID");
+            toUserID = obj.getInt("toUserID");
+            text = obj.getString("text");
+            int type = obj.getInt("messageType");
+            if(type == 1){
+                messageType = MessageType.TEXT;
+            }else if(type == 2){
+                messageType = MessageType.EMOJI;
+            }else if(type == 3){
+                messageType = MessageType.FILE;
+            }else{
+                messageType = MessageType.IMAGE;
+            }
+            time = obj.getString("time");
+        } catch (JSONException e) {
+            System.err.println(e);
+        }
     }
 
     public String getTime() {
@@ -111,5 +133,12 @@ public class Model_Send_Message {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Model_Send_Message{" + "fromUserID=" + fromUserID + ", toUserID=" + toUserID + ", text=" + text + ", messageType=" + messageType + ", file=" + file + ", time=" + time + '}';
+    }
+    
+    
     
 }

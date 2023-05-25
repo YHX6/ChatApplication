@@ -41,7 +41,7 @@ public class Chat_Right extends javax.swing.JLayeredPane {
     }
     
     public void setTime(String time){
-        txt.setTime("10:30 AM");
+        txt.setTime(time);
     }
 
         

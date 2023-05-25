@@ -4,16 +4,13 @@
  */
 package com.healthconnect.event;
 
-import com.healthconnect.model.Model_Message;
+import com.healthconnect.model.Model_Send_Message;
+import java.util.List;
 
 /**
  *
  * @author xyh10
  */
-public interface EventMessage {
-    
-    public void callMessage(Model_Message message);
-    
-    
-     
+public interface EventInitChatMessage {
+    public void initChatMessages(List<Model_Send_Message> messages);
 }

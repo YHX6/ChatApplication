@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.JTextArea;
 import server.healthconnect.app.MessageType;
 import server.healthconnect.model.Model_Client;
+import server.healthconnect.model.Model_Direction;
 import server.healthconnect.model.Model_File;
 import server.healthconnect.model.Model_Login;
 import server.healthconnect.model.Model_Message;
@@ -42,7 +43,7 @@ public class Service {
     private ServiceUser serviceUser;
     private List<Model_Client> listClients;
     private ServiceFile serviceFile;
-    private ServiceMessage serviceMessage;
+    private ServiceChatMessage serviceChatMessage;
 
     public static Service getInstance(JTextArea textArea) {
         if (instance == null) {
@@ -56,7 +57,7 @@ public class Service {
         serviceUser = new ServiceUser();
         listClients = new ArrayList<>();
         serviceFile = new ServiceFile();
-        serviceMessage = new ServiceMessage();
+        serviceChatMessage = new ServiceChatMessage();
 
     }
 
@@ -90,8 +91,10 @@ public class Service {
         });
         //add eventlistner, create menu left based on uses in the database
         server.addEventListener("list_user", Integer.class, new DataListener<Integer>() {
+            
             @Override
             public void onData(SocketIOClient sioc, Integer userID, AckRequest ar) throws Exception {
+               
                 try {
                     List<Model_User_Account> list = serviceUser.getUser(userID);
                     sioc.sendEvent("list_user", list.toArray());
@@ -100,10 +103,31 @@ public class Service {
                 }
             }
         });
+        
+        
+                // init chat history
+        server.addEventListener("chat_history", Model_Direction.class, new DataListener<Model_Direction>(){
+            @Override
+            public void onData(SocketIOClient sioc, Model_Direction t, AckRequest ar) throws Exception {
+                System.out.println(t.toString());
+                try {
+                    List<Model_Send_Message> messages = serviceChatMessage.getMessages(t);
+                    System.out.println(messages.toString());
+                    sioc.sendEvent("chat_history", messages.toArray());
+                    //ar.sendAckData( messages.toArray());
+                    //server.getBroadcastOperations().sendEvent("chat_history", messages.toArray());
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+            
+        });
+        
         //user login
         server.addEventListener("login", Model_Login.class, new DataListener<Model_Login>() {
             @Override
             public void onData(SocketIOClient sioc, Model_Login t, AckRequest ar) throws Exception {
+       
                 Model_User_Account login = serviceUser.login(t);
                 if (login != null) {
                     ar.sendAckData(true, login);
@@ -112,9 +136,9 @@ public class Service {
                 } else {
                     ar.sendAckData(false);
                 }
-
             }
         });
+        
 
         server.addDisconnectListener(new DisconnectListener() {
             @Override
@@ -229,7 +253,7 @@ public class Service {
             //1. persit in the database
             Model_Receive_Message message = new Model_Receive_Message(data.getFromUserID(), data.getText(), data.getMessageType(), null, data.getTime());
             try {
-                serviceMessage.PersistMessage(data);
+                serviceChatMessage.PersistMessage(data);
             } catch (SQLException e) {
             }
             

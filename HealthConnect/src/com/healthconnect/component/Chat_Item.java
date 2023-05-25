@@ -79,7 +79,7 @@ public class Chat_Item extends javax.swing.JLayeredPane {
         // CREATE A layered pane and add time+logo onto it
         JLayeredPane layer = new JLayeredPane();
         layer.setLayout(new FlowLayout(FlowLayout.RIGHT,0,0));
-        layer.setBorder(new EmptyBorder(0,5,10,5));
+        layer.setBorder(new EmptyBorder(0,10,10,10));
         
         // create text for time, align text to left
         label = new JLabel(time);

@@ -54,6 +54,7 @@ public class Login extends javax.swing.JPanel {
                       
                                         PublicEvent.getInstance().getEventMain().showLoading(false);
                                         PublicEvent.getInstance().getEventMain().initChat();
+                                        //System.out.println("clicked user list");
                                             
                                     }else{  // if password is wrong
                                         PublicEvent.getInstance().getEventMain().showLoading(false);

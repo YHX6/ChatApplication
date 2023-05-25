@@ -77,10 +77,10 @@ public class Model_Send_Message {
         this.time = time;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Model_Send_Message{" + "fromUserID=" + fromUserID + ", toUserID=" + toUserID + ", text=" + text + ", messageType=" + messageType + ", time=" + time + '}';
-//    }
+    @Override
+    public String toString() {
+        return "Model_Send_Message{" + "fromUserID=" + fromUserID + ", toUserID=" + toUserID + ", text=" + text + ", messageType=" + messageType + ", time=" + time + '}';
+    }
     
     
     

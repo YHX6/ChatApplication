@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.model.Model_Receive_Image;
 import java.awt.Color;
 import javax.swing.Icon;
 
@@ -40,20 +41,25 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
     }
     
     public void setImage(Icon... images){
-        //txt.setImage(false, images);
+        //
     }
     
         
-    public void setImage(String... imageEncodingStrings){
-        //txt.setImage(false, imageEncodingStrings);
+    public void setImage(Model_Receive_Image dataImage){
+        txt.setImage(false, dataImage);
     }
     
     public void setTime(String time){
-        txt.setTime("10:30 AM");
+        txt.setTime(time);
     }
     public void setFile(String filename, String filesize){
         txt.setFile(filename, filesize);
         
+    }
+    
+    public void setEmoji(Icon icon){
+        txt.hideText();
+        txt.setEmoji(false, icon);
     }
     
 
@@ -106,7 +112,7 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 48, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
