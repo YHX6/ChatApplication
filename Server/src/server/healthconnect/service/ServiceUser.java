@@ -67,7 +67,7 @@ public class ServiceUser {
                 con.setAutoCommit(true);
                 message.setAction(true);
                 message.setMessage("User Accout created!");
-                message.setData(new Model_User_Account(userID, data.getUserName(), "", "", true));
+                message.setData(new Model_User_Account(userID, data.getUserName(), "", "profile_default.jpg", true));
             }
         } catch (SQLException e) {
             

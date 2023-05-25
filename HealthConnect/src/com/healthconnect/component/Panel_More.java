@@ -14,12 +14,14 @@ import com.healthconnect.model.Model_User_Account;
 import com.healthconnect.service.Service;
 import com.healthconnect.swing.ScrollBar;
 import com.healthconnect.swing.WrapLayout;
+import com.healthconnect.util.Util;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -103,7 +105,7 @@ public class Panel_More extends javax.swing.JPanel {
                    File[] files = ch.getSelectedFiles();
                    try {
                        for(File file:files){
-                           Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), "" ,MessageType.IMAGE);
+                           Model_Send_Message message = new Model_Send_Message(Service.getInstance().getUser().getUserID(), user.getUserID(), "" ,MessageType.IMAGE, Util.toDateStr(new Date()));
                            Service.getInstance().addFile(file, message);
                            PublicEvent.getInstance().getEventChat().sendMessage(message);
                        }
@@ -191,7 +193,7 @@ public class Panel_More extends javax.swing.JPanel {
         c.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                Model_Send_Message message = new Model_Send_Message( Service.getInstance().getUser().getUserID(), user.getUserID(), data.getId() + "", MessageType.EMOJI);
+                Model_Send_Message message = new Model_Send_Message( Service.getInstance().getUser().getUserID(), user.getUserID(), data.getId() + "", MessageType.EMOJI, Util.toDateStr(new Date()));
                 sendMessage(message);
                 PublicEvent.getInstance().getEventChat().sendMessage(message);
             }

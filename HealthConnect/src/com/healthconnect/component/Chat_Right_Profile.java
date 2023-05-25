@@ -4,6 +4,7 @@
  */
 package com.healthconnect.component;
 
+import com.healthconnect.model.Model_File_Sender;
 import com.healthconnect.model.Model_Receive_Image;
 import java.awt.Color;
 import javax.swing.Icon;
@@ -13,24 +14,18 @@ import javax.swing.ImageIcon;
  *
  * @author xyh10
  */
-public class Chat_Left_Profile extends javax.swing.JLayeredPane {
+public class Chat_Right_Profile extends javax.swing.JLayeredPane {
 
     /**
      * Creates new form Chat_Left
      */
-    public Chat_Left_Profile() {
+    public Chat_Right_Profile() {
         initComponents();
         txt.setBackground(new Color(242,242,242,242));
     }
     
-    public void setUserProfile(String user){
-        txt.setUserProfile(user);
-        
-    }
-    
-    
-    public void setImageProfile(Icon image){
-        profile.setImage(image);
+    public void setProfile(String imageString){
+        profile.setImage(new ImageIcon("client_data/" + imageString));
     }
     
     public void setText(String text){
@@ -38,34 +33,33 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
             txt.hideText();
         }else{
             txt.setText(text);
-        } 
+        }    
+        txt.seen();
     }
     
-    public void setImage(Icon... images){
-        //
-    }
     
-    public void setProfile(String imageString){
-        profile.setImage(new ImageIcon("client_data/" + imageString));
+    public void setImage(Model_File_Sender fileSender){
+        txt.setImage(true, fileSender);  //set images to the right
     }
-    
         
-    public void setImage(Model_Receive_Image dataImage){
-        txt.setImage(false, dataImage);
+    public void setImage(String... imageEncodingStrings){
+        //txt.setImage(false, imageEncodingStrings);
     }
     
     public void setTime(String time){
         txt.setTime(time);
     }
+
+        
     public void setFile(String filename, String filesize){
         txt.setFile(filename, filesize);
-        
     }
     
     public void setEmoji(Icon icon){
         txt.hideText();
-        txt.setEmoji(false, icon);
-    }
+        txt.setEmoji(true, icon);
+    } 
+  
     
 
     /**
@@ -77,9 +71,9 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txt = new com.healthconnect.component.Chat_Item();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         profile = new com.healthconnect.swing.ImageAvatar();
+        txt = new com.healthconnect.component.Chat_Item();
 
         profile.setImage(new javax.swing.ImageIcon(getClass().getResource("/com/healthconnect/icon/zzs.jpg"))); // NOI18N
 
@@ -89,36 +83,42 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addComponent(profile, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 46, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(profile, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
         setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 

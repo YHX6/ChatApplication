@@ -83,6 +83,11 @@ public class Model_User_Account {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Model_User_Account{" + "userID=" + userID + ", userName=" + userName + ", gender=" + gender + ", image=" + image + ", status=" + status + '}';
+    }
     
     
 }
