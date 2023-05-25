@@ -239,8 +239,14 @@ public class Service {
     private void sendToClient(Model_Send_Message data, AckRequest ar) {
         if (data.getMessageType() == MessageType.IMAGE.getValue() || data.getMessageType() == MessageType.FILE.getValue()) {
             try {
+                 // 1.send file/image, generate id
                 Model_File file = serviceFile.addFileReceiver(data.getText());
                 serviceFile.initFile(file, data);
+                
+                //2.persist in database
+                data.setText(file.getFileID() + file.getFileExtension());
+                serviceChatMessage.PersistMessage(data);
+                
                 ar.sendAckData(file.getFileID());
             } catch (IOException | SQLException e) {
                 e.printStackTrace();

@@ -54,6 +54,26 @@ public class Chat_Image extends javax.swing.JLayeredPane {
         
     }
     
+    public void addImage(String historyImage){
+      
+        Image_Item pic = new Image_Item();
+        Icon icon;
+        try {
+            icon= new ImageIcon("client_data/" + historyImage);
+            System.out.println("1");
+        } catch (Exception e) {
+            icon= new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png"));
+            System.out.println("2");
+        }
+        
+        
+        pic.setPreferredSize(getAutoSize(icon, 200, 200));
+        //pic.setPreferredSize(new Dimension(dataImage.getWidth(), dataImage.getHeight()));
+        pic.setImage(icon);
+        add(pic, "wrap");
+        
+    }
+    
     private void addEvent(Component com, Icon image){
         // register a certain event for a comppnent
         com.setCursor(new Cursor(Cursor.HAND_CURSOR));  // cursor

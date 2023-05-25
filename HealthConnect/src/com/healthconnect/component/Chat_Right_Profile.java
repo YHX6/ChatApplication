@@ -42,8 +42,8 @@ public class Chat_Right_Profile extends javax.swing.JLayeredPane {
         txt.setImage(true, fileSender);  //set images to the right
     }
         
-    public void setImage(String... imageEncodingStrings){
-        //txt.setImage(false, imageEncodingStrings);
+    public void setImage(String historyImage){
+        txt.setImage(false, historyImage);
     }
     
     public void setTime(String time){

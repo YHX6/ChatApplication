@@ -58,6 +58,8 @@ public class ChatBody extends javax.swing.JPanel {
                 
                 String dateSoFar = null;
                 for(Model_Send_Message m:messages){
+                    //System.out.println(m.toString());
+                    
                     // add time bar
                     String dateThis = m.getTime().substring(0, 10);
                     if(dateSoFar == null || !dateThis.equals(dateSoFar)){
@@ -65,19 +67,21 @@ public class ChatBody extends javax.swing.JPanel {
                         addDate(dateSoFar);
                     }
                     // add message
-//                    if(m.getMessageType() == MessageType.TEXT){
+                    if(m.getMessageType() == MessageType.TEXT || m.getMessageType() == MessageType.EMOJI){
                         if (m.getFromUserID() == thisID) {
                             addItemRight(m);
                         } else {
                             addItemLeft(m);
                         }
-//                    }else if(m.getMessageType() == MessageType.EMOJI){
-//                        if (m.getFromUserID() == thisID) {
-//                            addItemRight(m);
-//                        } else {
-//                            addItemLeft(m);
-//                        }
-//                    }
+                    }else if(m.getMessageType() == MessageType.IMAGE){
+                        if (m.getFromUserID() == thisID) {
+                            addItemRight(m);
+                        } else {
+                            addItemLeft(m);
+                        }
+                        
+
+                    }
                     
                     
                 }
@@ -108,12 +112,12 @@ public class ChatBody extends javax.swing.JPanel {
         revalidate();
     }
     
-
+    @Deprecated
     public void addItemLeft(String text, String user, Icon... images){
         Chat_Left_Profile item = new Chat_Left_Profile();
         item.setProfile(this.user.getImage());
         item.setText(text);
-        item.setImage(images);
+        //item.setImage(images);
         item.setTime(Util.toDateStr(new Date()));
         item.setUserProfile(user);
         body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
@@ -136,6 +140,12 @@ public class ChatBody extends javax.swing.JPanel {
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.IMAGE){
            // toD
+           Chat_Left_Profile item = new Chat_Left_Profile();
+            item.setProfile(this.user.getImage());
+            item.setImage(data.getText());
+            item.setTime(data.getTime());
+
+            body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }
         
         repaint();
@@ -159,7 +169,7 @@ public class ChatBody extends javax.swing.JPanel {
         }else if(data.getMessageType() == MessageType.IMAGE){
             Chat_Left_Profile item = new Chat_Left_Profile();
             item.setProfile(this.user.getImage());
-            item.setText("");
+            //item.setText("");
             item.setImage(data.getDataImage());
             item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
@@ -211,8 +221,12 @@ public class ChatBody extends javax.swing.JPanel {
         }else if(data.getMessageType() == MessageType.IMAGE){
             Chat_Right_Profile item = new Chat_Right_Profile();
             item.setProfile(Service.getInstance().getUser().getImage());
-            item.setText("");
-            item.setImage(data.getFile());
+            if(data.getFile() != null){
+                item.setImage(data.getFile());
+            }else{
+                item.setImage(data.getText());
+            }
+            
             item.setTime(data.getTime());
             body.add(item, "wrap, al right, w 100:: 80%");  // set woyj as 80% max width
             
