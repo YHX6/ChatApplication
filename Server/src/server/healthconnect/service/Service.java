@@ -130,6 +130,7 @@ public class Service {
                     ar.sendAckData(true, login);
                     addClient(sioc, login);
                     userConnect(login.getUserID());
+                    textArea.append("User Log in:  username = " + t.getUserName() + "\n");
                 } else {
                     ar.sendAckData(false);
                 }
@@ -206,6 +207,23 @@ public class Service {
             
         });
         
+        //
+        server.addEventListener("logout", Integer.class, new DataListener<Integer>() {
+            @Override
+            public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {
+                for(Model_Client d:listClients){
+                    if(d.getUser().getUserID() == t){
+                        listClients.remove(d);
+                        textArea.append("User Log out:  username = " + d.getUser().getUserName()+ "\n");
+                        break;
+                    }
+                }
+                
+                userDisconnect(t);
+
+            }
+        });
+        
         server.start();
         textArea.setText("Server start on port: " + PORT_NUMBER + "\n");
     }
@@ -224,12 +242,14 @@ public class Service {
 
     private void userDisconnect(int userID) {
         server.getBroadcastOperations().sendEvent("user_status", userID, false);
+  
     }
 
     public int removeClient(SocketIOClient client) {
         for (Model_Client d : listClients) {
             if (d.getClient() == client) {
                 listClients.remove(d);
+                textArea.append("User Log out:  username = " + d.getUser().getUserName()+ "\n");
                 return d.getUser().getUserID();
             }
         }

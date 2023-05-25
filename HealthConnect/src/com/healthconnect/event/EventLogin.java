@@ -18,5 +18,6 @@ public interface EventLogin {
     public void register(Model_Register data, EventMessage eventMessage);
     public void goRegister();
     public void goLogin();
+    public void logout();
     
 }
