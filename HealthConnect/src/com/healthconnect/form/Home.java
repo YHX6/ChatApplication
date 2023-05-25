@@ -24,11 +24,18 @@ public class Home extends javax.swing.JLayeredPane {
     }
 
     private void init(){
-        setLayout(new MigLayout("fillx, filly","5[200!]10[fill, 100%]5[200!]0","0[fill]0"));
+        //setLayout(new MigLayout("fillx, filly","5[200!]10[fill, 100%]5[200!]0","0[fill]0"));
+        setLayout(new MigLayout("fillx, filly","5[80!]0[200!]10[fill, 100%]5","0[fill]0"));
+        //profile
+        this.add(new Menu_Profile());
+        
+        //left 
         this.add(new Menu_Left());
+         //chat 
         chat =new Chat();
         this.add(chat);
-        this.add(new Menu_Right());
+        
+        
         chat.setVisible(false);
         
     }

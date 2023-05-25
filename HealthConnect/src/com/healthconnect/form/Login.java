@@ -106,7 +106,16 @@ public class Login extends javax.swing.JPanel {
            public void goLogin(){
                slide.show(0);
            }
+
+            @Override
+            public void logout() {
+                Service.getInstance().getClient().emit("logout", Service.getInstance().getUser().getUserID());
+                PublicEvent.getInstance().getEventMenuLeft().clearMenuLeft();
+                PublicEvent.getInstance().getEventMain().showLoginPage();
+            }
         
+           
+           
         });
         
         

@@ -92,6 +92,13 @@ public class Main extends javax.swing.JFrame {
             public void updateUser(Model_User_Account user) {
               home.updateUser(user);
             }
+
+            @Override
+            public void showLoginPage() {
+                login.setVisible(true);
+            }
+            
+            
         });
         
 //        PublicEvent.getInstance().addEventChatMessage(new EventChatMessage(){

@@ -20,4 +20,6 @@ public interface EventMain {
     
     public void updateUser(Model_User_Account user);
     
+    public void showLoginPage();
+    
 }
