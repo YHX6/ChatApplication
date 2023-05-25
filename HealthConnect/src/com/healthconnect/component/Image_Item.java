@@ -30,6 +30,19 @@ public class Image_Item extends javax.swing.JLayeredPane {
         initComponents();
     }
     
+    public void setImage(Icon icon){
+        //Icon icon;
+//        try {
+//            icon= new ImageIcon("client_data/" + historyImage);
+//            System.out.println("1");
+//        } catch (Exception e) {
+//            icon= new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png"));
+//            System.out.println("2");
+//        }
+        picBox.setImage(icon);
+        progress.setVisible(false);
+    }
+    
     public void setImage(Model_Receive_Image dataImage){
         int width = dataImage.getWidth();
         int height = dataImage.getHeight();
@@ -57,6 +70,7 @@ public class Image_Item extends javax.swing.JLayeredPane {
                 }
             });
         } catch (IOException e) {
+            //picBox.setImage(new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png")));
             e.printStackTrace();
         }
         

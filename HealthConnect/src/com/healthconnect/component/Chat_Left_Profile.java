@@ -41,8 +41,9 @@ public class Chat_Left_Profile extends javax.swing.JLayeredPane {
         } 
     }
     
-    public void setImage(Icon... images){
+    public void setImage(String historyImage){
         //
+        txt.setImage(false, historyImage);
     }
     
     public void setProfile(String imageString){

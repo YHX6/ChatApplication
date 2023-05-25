@@ -49,7 +49,12 @@ public class Model_Receive_Message {
             if(!obj.isNull("dataImage")){
                 dataImage = new Model_Receive_Image(obj.get("dataImage"));
             }
-            time = obj.getString("time");
+            try {
+                time = obj.getString("time");
+            } catch (Exception e) {
+                time = Util.toDateStr(new Date());
+            }
+            
         } catch (JSONException e) {
             System.err.println(e);
         }
