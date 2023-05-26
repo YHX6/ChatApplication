@@ -48,7 +48,7 @@ public class Chat extends javax.swing.JPanel {
             
             @Override
             public void receiveMessage(Model_Receive_Message data) {
-                if(chatTitle != null && chatTitle.getUser().getUserID() == data.getFromUserID()){
+                if(chatTitle != null && chatTitle.getUser() !=null && chatTitle.getUser().getUserID() == data.getFromUserID()){
                     chatBody.addItemLeft(data);
                 }
             }
@@ -62,7 +62,11 @@ public class Chat extends javax.swing.JPanel {
         add(chatBottom, "h ::50%");  
     }
 
-        
+    public void refreshChat(){
+        //chatBottom.refreshBottom();
+    }    
+    
+    
     public void setUser(Model_User_Account user){
         chatTitle.setUserName(user);
         chatBottom.setUser(user);

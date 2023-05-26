@@ -60,10 +60,8 @@ public class Chat_Image extends javax.swing.JLayeredPane {
         Icon icon;
         try {
             icon= new ImageIcon("client_data/" + historyImage);
-            System.out.println("1");
         } catch (Exception e) {
-            icon= new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png"));
-            System.out.println("2");
+            icon= new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png"));      
         }
         
         

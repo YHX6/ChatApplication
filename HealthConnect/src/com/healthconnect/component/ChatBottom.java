@@ -43,6 +43,7 @@ public class ChatBottom extends javax.swing.JPanel {
         init();
     }
 
+
     
      
     private void init(){
@@ -158,8 +159,15 @@ public class ChatBottom extends javax.swing.JPanel {
     }
 
     public void setUser(Model_User_Account user) {
-        this.user = user;
-        panelMore.setUser(user);
+        if(user == null) {
+            removeAll();
+            init();
+        }else{
+            this.user = user;
+            panelMore.setUser(user);
+        }
+        
+        
     } 
 
     private Panel_More panelMore;

@@ -22,4 +22,6 @@ public interface EventMain {
     
     public void showLoginPage();
     
+    public void refreshChat();
+    
 }

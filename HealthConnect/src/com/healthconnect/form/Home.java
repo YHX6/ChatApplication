@@ -17,6 +17,7 @@ public class Home extends javax.swing.JLayeredPane {
     /**
      * Creates new form Home
      */
+    private Menu_Profile menu_Profile;
     private Chat chat;
     public Home() {
         initComponents();
@@ -27,7 +28,8 @@ public class Home extends javax.swing.JLayeredPane {
         //setLayout(new MigLayout("fillx, filly","5[200!]10[fill, 100%]5[200!]0","0[fill]0"));
         setLayout(new MigLayout("fillx, filly","5[80!]0[200!]10[fill, 100%]5","0[fill]0"));
         //profile
-        this.add(new Menu_Profile());
+        menu_Profile = new Menu_Profile();
+        this.add(menu_Profile);
         
         //left 
         this.add(new Menu_Left());
@@ -39,6 +41,11 @@ public class Home extends javax.swing.JLayeredPane {
         chat.setVisible(false);
         
     }
+
+    public void refreshChat(){
+        chat.refreshChat();
+    }
+    
 
     public void setUser(Model_User_Account user){
         chat.setUser(user);

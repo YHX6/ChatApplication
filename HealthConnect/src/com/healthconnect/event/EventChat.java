@@ -18,6 +18,5 @@ public interface EventChat {
     
     public void receiveMessage(Model_Receive_Message data);
     
-
     
 }

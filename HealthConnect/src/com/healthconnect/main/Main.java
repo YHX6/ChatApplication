@@ -80,6 +80,7 @@ public class Main extends javax.swing.JFrame {
                 home.setVisible(true);
                 login.setVisible(false);
                 Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());  // send id for this client to server and revives all chats users
+                
                 //System.out.println("triger list_user");
             }
 
@@ -97,6 +98,14 @@ public class Main extends javax.swing.JFrame {
             public void showLoginPage() {
                 login.setVisible(true);
             }
+
+            @Override
+            public void refreshChat() {
+                home.refreshChat();
+            }
+
+            
+            
             
             
         });
