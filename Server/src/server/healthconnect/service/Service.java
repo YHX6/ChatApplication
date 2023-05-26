@@ -157,7 +157,7 @@ public class Service {
 
         });
 
-         // send file to user side
+         // user side send file to server
         server.addEventListener("send_file", Model_Package_Sender.class, new DataListener<Model_Package_Sender>() {
             @Override
             public void onData(SocketIOClient sioc, Model_Package_Sender t, AckRequest ar) throws Exception {
@@ -182,7 +182,7 @@ public class Service {
 
         });
         
-         // get file to user side
+         // get file from user side
         server.addEventListener("get_file", Integer.class, new DataListener<Integer>(){
             @Override
             public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {

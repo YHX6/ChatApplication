@@ -164,7 +164,7 @@ public class ChatBody extends javax.swing.JPanel {
             Chat_Left_Profile item = new Chat_Left_Profile();
             item.setProfile(this.user.getImage());
             item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
-            item.setTime(data.getTime());
+            //item.setTime(data.getTime());
             body.add(item, "wrap, w 100:: 80%");  // set woyj as 80% max width
         }else if(data.getMessageType() == MessageType.IMAGE){
             Chat_Left_Profile item = new Chat_Left_Profile();

@@ -4,7 +4,12 @@
  */
 package com.healthconnect.form;
 
+import com.healthconnect.event.EventProfileBar;
 import com.healthconnect.event.PublicEvent;
+import com.healthconnect.model.Model_User_Account;
+import com.healthconnect.service.Service;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,13 +20,36 @@ public class Menu_Profile extends javax.swing.JPanel {
     /**
      * Creates new form Menu_Left
      */
+    
     public Menu_Profile() {
         initComponents();
-    }
-    
-    public void setProfileImage(){
+        
+        PublicEvent.getInstance().addEventProfileBar(new EventProfileBar(){
+            @Override
+            public void showRrofile() {
+                showProfileImage();
+            }
+            
+        });
+        
         
     }
+
+    public void showProfileImage() {
+        Icon icon;
+        try {
+            icon= new ImageIcon("client_data/" + Service.getInstance().getUser().getImage());
+            System.out.println("1");
+        } catch (Exception e) {
+            icon= new ImageIcon(getClass().getResource("/com/healthconnect/icon/image_not_found.png"));      
+            System.out.println("2");
+        }
+        
+        
+        profile.setImage(icon);
+    }
+    
+    
     
     
 

@@ -23,13 +23,23 @@ public class ChatTitle extends javax.swing.JPanel {
     }
     
     public void setUserName(Model_User_Account user){
-        this.user = user;
-        name.setText(user.getUserName());
-        if(user.isStatus()){
-            setStatusActive();
+        if(user == null){
+            this.user = null;
+            name.setText("");
+            status.setText("");
+            
         }else{
-            setStatusText("Offline");
+            
+            this.user = user;
+            name.setText(user.getUserName());
+            if (user.isStatus()) {
+                setStatusActive();
+            } else {
+                setStatusText("Offline");
+            }
         }
+        
+
     }
     
     
@@ -93,8 +103,8 @@ public class ChatTitle extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(layer, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(layer, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 

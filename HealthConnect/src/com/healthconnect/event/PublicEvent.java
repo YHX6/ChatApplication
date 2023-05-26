@@ -18,6 +18,7 @@ public class PublicEvent {
     private EventMenuLeft eml;
     private EventChatMessage ecm;
     private EventInitChatMessage eventInitChatMessage;
+    private EventProfileBar eventProfileBar;
     
     public static PublicEvent getInstance(){
         if(instance == null){
@@ -30,6 +31,14 @@ public class PublicEvent {
         
     }
 
+    public EventProfileBar getEventProfileBar() {
+        return eventProfileBar;
+    }
+
+    public void addEventProfileBar(EventProfileBar eventProfileBar) {
+        this.eventProfileBar = eventProfileBar;
+    }
+    
     public EventInitChatMessage getEventInitChatMessage() {
         return eventInitChatMessage;
     }
